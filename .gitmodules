@@ -1,0 +1,3 @@
+[submodule "DeadDog.Audio"]
+	path = DeadDog.Audio
+	url = https://github.com/deaddog/DeadDog.Audio.git
