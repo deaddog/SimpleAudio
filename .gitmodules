@@ -1,3 +1,6 @@
 [submodule "DeadDog.Audio"]
 	path = DeadDog.Audio
 	url = https://github.com/deaddog/DeadDog.Audio.git
+[submodule "XNAControls"]
+	path = XNAControls
+	url = https://github.com/deaddog/XNAControls.git
