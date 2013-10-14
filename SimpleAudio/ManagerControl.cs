@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MoonifyControls;
 
-using DeadDog.Audio;
 using DeadDog.Audio.Libraries;
-using DeadDog.Audio.Scan;
 
 using DeadDog.GUI;
 
@@ -31,6 +29,7 @@ namespace SimpleAudio
                 Width = 280
             };
             search.TextChanged += (s, e) => search.BackgroundText = search.Text.Length > 0 ? "" : "Search...";
+            search.KeyDown += new XNAControls.KeyEventHandler(search_KeyDown);
             list = new ListBox<Track>()
             {
                 Location = new Vector2(10, 52),
@@ -42,6 +41,21 @@ namespace SimpleAudio
             manager.Controls.Add(list);
 
             manager.KeyboardControl = search;
+        }
+
+        private void search_KeyDown(object sender, XNAControls.KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Microsoft.Xna.Framework.Input.Keys.Up:
+                    if (list.SelectedIndex > 0)
+                        list.SelectedIndex--;
+                    break;
+                case Microsoft.Xna.Framework.Input.Keys.Down:
+                    if (list.SelectedIndex < list.Items.Count - 1)
+                        list.SelectedIndex++;
+                    break;
+            }
         }
 
         protected override void Draw(SpriteBatch spritebatch, GameTime gameTime)
