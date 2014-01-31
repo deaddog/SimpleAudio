@@ -43,6 +43,11 @@ namespace SimpleAudio
             manager.KeyboardControl = search;
         }
 
+        public void SetMouseOffset(int x, int y)
+        {
+            manager.SetMouseOffset(x, y);
+        }
+
         private void search_KeyDown(object sender, XNAControls.KeyEventArgs e)
         {
             switch (e.KeyCode)

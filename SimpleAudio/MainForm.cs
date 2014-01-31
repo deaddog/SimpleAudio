@@ -14,6 +14,20 @@ namespace SimpleAudio
         public MainForm()
         {
             InitializeComponent();
+
+            this.managerControl1.LocationChanged += (s, e) => HandleLocationChange();
+        }
+
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            HandleLocationChange();
+            base.OnLocationChanged(e);
+        }
+
+        private void HandleLocationChange()
+        {
+            var p = this.PointToScreen(new Point(0, 0));
+            this.managerControl1.SetMouseOffset(-p.X, -p.Y);
         }
     }
 }
