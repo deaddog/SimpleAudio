@@ -1,5 +1,5 @@
 ########################
-## Visual Studio 2010 ##
+## Visual Studio 2013 ##
 ########################
 
 *.cache
@@ -9,4 +9,3 @@
 *obj/
 *.suo
 *.cachefile
-*.sln
