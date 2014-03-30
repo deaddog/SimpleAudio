@@ -4,5 +4,6 @@
         Title="MainWindow" Height="350" Width="525" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1">
     <Grid>
         <Rectangle Fill="#FF2E6292" Height="60" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
+        <ListBox Margin="0,59,0,0" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
     </Grid>
 </Window>
