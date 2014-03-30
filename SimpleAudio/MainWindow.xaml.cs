@@ -24,5 +24,11 @@ namespace SimpleAudio
         {
             InitializeComponent();
         }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            this.DragMove();
+            base.OnMouseLeftButtonDown(e);
+        }
     }
 }
