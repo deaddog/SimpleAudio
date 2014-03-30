@@ -6,7 +6,7 @@
         <Rectangle Fill="#FF2E6292" Height="60" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
         <ListBox Margin="0,59,0,20" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
         <Label Content="Search For Tracks" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBox Margin="10,30,10,0" TextWrapping="Wrap" Text="TextBox" FontSize="11" Height="21" VerticalAlignment="Top"/>
+        <TextBox Margin="10,30,10,0" TextWrapping="Wrap" FontSize="11" Height="21" VerticalAlignment="Top"/>
         <Label Content="Use Enter to enqueue a track, and Shift+Enter to jump to a track" HorizontalAlignment="Left" Margin="0,325,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#B2000000"/>
     </Grid>
 </Window>
