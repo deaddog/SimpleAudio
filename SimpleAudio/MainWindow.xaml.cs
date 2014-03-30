@@ -30,5 +30,12 @@ namespace SimpleAudio
             this.DragMove();
             base.OnMouseLeftButtonDown(e);
         }
+
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                this.Close();
+            base.OnPreviewKeyDown(e);
+        }
     }
 }
