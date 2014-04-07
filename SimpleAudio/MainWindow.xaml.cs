@@ -20,9 +20,21 @@ namespace SimpleAudio
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ScannerBackgroundWorker scanner;
+
         public MainWindow()
         {
             InitializeComponent();
+            scanner = new ScannerBackgroundWorker(
+                new DeadDog.Audio.Scan.AudioScanner(new DeadDog.Audio.MediaParser(), @"C:\Users\Mikkel\Music\"));
+            scanner.FileParsed += scanner_FileParsed;
+            scanner.RunAync();
+        }
+
+        void scanner_FileParsed(object sender, DeadDog.Audio.Scan.ScanFileEventArgs e)
+        {
+            if (e.State == DeadDog.Audio.Scan.FileState.Added)
+                listbox.Items.Add(e.Track);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
