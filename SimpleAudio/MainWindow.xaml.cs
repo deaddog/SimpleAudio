@@ -49,5 +49,13 @@ namespace SimpleAudio
                 this.Close();
             base.OnPreviewKeyDown(e);
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = (sender as TextBox).Text.Trim();
+
+            listbox.Items.Filter = 
+                track => DeadDog.Audio.Searching.Match((DeadDog.Audio.RawTrack)track, DeadDog.Audio.SearchMethods.ContainsAll, text);
+        }
     }
 }
