@@ -1,3 +1,6 @@
 [submodule "DeadDog.Audio"]
 	path = DeadDog.Audio
 	url = https://github.com/deaddog/DeadDog.Audio.git
+[submodule "WPFNotifyIcon"]
+	path = WPFNotifyIcon
+	url = https://github.com/deaddog/WPFNotifyIcon.git

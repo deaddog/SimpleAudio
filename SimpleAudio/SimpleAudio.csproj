@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -98,6 +99,10 @@
     <ProjectReference Include="..\DeadDog.Audio\DeadDog.Audio.csproj">
       <Project>{a393fd81-a89c-4761-af87-2e5de2b95b61}</Project>
       <Name>DeadDog.Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPFNotifyIcon\NotifyIconWpf.csproj">
+      <Project>{7ac63864-7638-41c4-969c-d3197ef2bed9}</Project>
+      <Name>NotifyIconWpf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
