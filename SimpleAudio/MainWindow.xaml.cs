@@ -47,6 +47,18 @@ namespace SimpleAudio
         {
             if (e.Key == Key.Escape)
                 this.Close();
+
+            if (!listbox.IsFocused)
+            {
+                int s = listbox.SelectedIndex;
+                int c = listbox.Items.Count;
+                if (e.Key == Key.Down)
+                    listbox.SelectedIndex = s < c - 1 ? s + 1 : c - 1;
+                else if (e.Key == Key.Up)
+                    listbox.SelectedIndex = s > 0 ? s - 1 : 0;
+                listbox.ScrollIntoView(listbox.SelectedItem);
+            }
+
             base.OnPreviewKeyDown(e);
         }
 
