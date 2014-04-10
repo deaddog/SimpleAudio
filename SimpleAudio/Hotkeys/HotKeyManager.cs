@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
@@ -6,6 +7,13 @@ namespace SimpleAudio.Hotkeys
 {
     public class HotKeyManager
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HotKeyManager"/> class.
+        /// </summary>
+        public HotKeyManager()
+        {
+            this.hotkeys = new Dictionary<int, HotKey>();
+        }
 
         #region HotKey Interop
 
@@ -36,5 +44,7 @@ namespace SimpleAudio.Hotkeys
         }
 
         #endregion
+
+        private Dictionary<int, HotKey> hotkeys;
     }
 }
