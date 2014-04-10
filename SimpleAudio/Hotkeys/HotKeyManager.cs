@@ -10,8 +10,16 @@ namespace SimpleAudio.Hotkeys
         /// <summary>
         /// Initializes a new instance of the <see cref="HotKeyManager"/> class.
         /// </summary>
-        public HotKeyManager()
+        /// <param name="hwndSource">The handle of the window. Must not be null.</param>
+        public HotKeyManager(HwndSource hwndSource)
         {
+            if (hwndSource == null)
+                throw new ArgumentNullException("hwndSource");
+
+            this.hook = new HwndSourceHook(WndProc);
+            this.hwndSource = hwndSource;
+            hwndSource.AddHook(hook);
+
             this.hotkeys = new Dictionary<int, HotKey>();
         }
 
@@ -44,6 +52,20 @@ namespace SimpleAudio.Hotkeys
         }
 
         #endregion
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_HotKey)
+            {
+                if (hotkeys.ContainsKey((int)wParam))
+                {
+                    HotKey h = hotkeys[(int)wParam];
+                    //TODO Handle hotkey
+                }
+            }
+
+            return new IntPtr(0);
+        }
 
         private Dictionary<int, HotKey> hotkeys;
     }
