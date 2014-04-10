@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Hotkeys\HotKey.cs" />
+    <Compile Include="Hotkeys\HotKeyAlreadyRegisteredException.cs" />
     <Compile Include="Hotkeys\HotKeyManager.cs" />
     <Compile Include="ScannerBackgroundWorker.cs" />
     <Page Include="MainWindow.xaml">
