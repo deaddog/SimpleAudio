@@ -7,7 +7,7 @@ using System.Windows.Interop;
 
 namespace SimpleAudio.Hotkeys
 {
-    public class HotKeyManager
+    public partial class HotKeyManager
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HotKeyManager"/> class.
