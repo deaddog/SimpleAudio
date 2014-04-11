@@ -116,5 +116,32 @@ namespace SimpleAudio.Hotkeys
         public bool RemoveHotKey(HotKey hotKey)
         {
         }
+
+
+        private bool disposed;
+        private void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+                hwndSource.RemoveHook(hook);
+
+            while (hotkeys.Count > 0)
+                RemoveHotKey(hotkeys[0]);
+
+            disposed = true;
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~HotKeyManager()
+        {
+            this.Dispose(false);
+        }
     }
 }
