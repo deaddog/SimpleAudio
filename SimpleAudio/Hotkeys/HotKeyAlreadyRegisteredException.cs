@@ -1,24 +1,35 @@
 ﻿using System;
+using System.Windows.Input;
 
 namespace SimpleAudio.Hotkeys
 {
     public class HotKeyAlreadyRegisteredException : Exception
     {
-        private HotKey hotkey;
-        public HotKey HotKey
+        private Key key;
+        private ModifierKeys modifiers;
+
+        public ModifierKeys Modifiers
         {
-            get { return hotkey; }
+            get { return modifiers; }
+            set { modifiers = value; }
         }
-            
-        public HotKeyAlreadyRegisteredException(string message, HotKey hotkey)
+        public Key Key
+        {
+            get { return key; }
+            set { key = value; }
+        }
+
+        public HotKeyAlreadyRegisteredException(string message, Key key, ModifierKeys modifiers)
             : base(message)
         {
-            this.hotkey = hotkey;
+            this.key = key;
+            this.modifiers = modifiers;
         }
-        public HotKeyAlreadyRegisteredException(string message, HotKey hotkey, Exception inner)
+        public HotKeyAlreadyRegisteredException(string message, Key key, ModifierKeys modifiers, Exception inner)
             : base(message, inner)
         {
-            this.hotkey = hotkey;
+            this.key = key;
+            this.modifiers = modifiers;
         }
     }
 }
