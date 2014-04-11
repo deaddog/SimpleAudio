@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -44,12 +45,35 @@ namespace SimpleAudio.Hotkeys
         private HwndSourceHook hook;
         private HwndSource hwndSource;
 
-        private void RegisterHotKey(int id, HotKey hotKey)
+        private void RegisterHotKey(int id, Key key, ModifierKeys modifiers)
         {
+            if ((int)hwndSource.Handle != 0)
+            {
+                RegisterHotKey(hwndSource.Handle, id, (int)modifiers, KeyInterop.VirtualKeyFromKey(key));
+                int error = Marshal.GetLastWin32Error();
+                if (error != 0)
+                {
+                    Exception e = new Win32Exception(error);
+
+                    if (error == 1409)
+                        throw new HotKeyAlreadyRegisteredException(e.Message, key, modifiers, e);
+                    else
+                        throw e;
+                }
+            }
+            else
+                throw new InvalidOperationException("Handle is invalid");
         }
 
         private void UnregisterHotKey(int id)
         {
+            if ((int)hwndSource.Handle != 0)
+            {
+                UnregisterHotKey(hwndSource.Handle, id);
+                int error = Marshal.GetLastWin32Error();
+                if (error != 0)
+                    throw new Win32Exception(error);
+            }
         }
 
         #endregion
