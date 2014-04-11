@@ -107,7 +107,7 @@ namespace SimpleAudio.Hotkeys
 
         public HotKey AddHotKey(Key key, ModifierKeys modifiers, Action action)
         {
-            return AddHotKey(key, modifiers, true);
+            return AddHotKey(key, modifiers, action, true);
         }
         public HotKey AddHotKey(Key key, ModifierKeys modifiers, Action action, bool enabled)
         {
