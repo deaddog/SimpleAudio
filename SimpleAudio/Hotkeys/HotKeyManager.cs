@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Windows.Input;
 using System.Windows.Interop;
 
 namespace SimpleAudio.Hotkeys
@@ -79,5 +80,17 @@ namespace SimpleAudio.Hotkeys
         }
 
         private Dictionary<int, HotKey> hotkeys;
+
+        public HotKey AddHotKey(Key key, ModifierKeys modifiers, Action action)
+        {
+            return AddHotKey(key, modifiers, true);
+        }
+        public HotKey AddHotKey(Key key, ModifierKeys modifiers, Action action, bool enabled)
+        {
+        }
+
+        public bool RemoveHotKey(HotKey hotKey)
+        {
+        }
     }
 }
