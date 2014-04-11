@@ -99,15 +99,15 @@ namespace SimpleAudio.Hotkeys
 
         private Dictionary<int, HotKey> hotkeys;
 
-        public HotKey AddHotKey(Key key, ModifierKeys modifiers, Action action)
-        {
-            return AddHotKey(key, modifiers, action, true);
-        }
-        public HotKey AddHotKey(Key key, ModifierKeys modifiers, Action action, bool enabled)
+        public void AddHotKey(Key key, ModifierKeys modifiers, Action action)
         {
         }
 
-        public bool RemoveHotKey(HotKey hotKey)
+        public bool RemoveHotKey(Key key, ModifierKeys modifier, Action action)
+        {
+        }
+
+        public void ClearHotKey(Key key, ModifierKeys modifier)
         {
         }
 
@@ -122,7 +122,10 @@ namespace SimpleAudio.Hotkeys
                 hwndSource.RemoveHook(hook);
 
             while (hotkeys.Count > 0)
-                RemoveHotKey(hotkeys[0]);
+            {
+                HotKey hk = hotkeys[0];
+                ClearHotKey(hk.Key, hk.Modifiers);
+            }
 
             disposed = true;
         }
