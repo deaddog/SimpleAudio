@@ -91,14 +91,8 @@ namespace SimpleAudio.Hotkeys
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WM_HotKey)
-            {
-                if (hotkeys.ContainsKey((int)wParam))
-                {
-                    HotKey h = hotkeys[(int)wParam];
-                    //TODO Handle hotkey
-                }
-            }
+            if (msg == WM_HotKey && hotkeys.ContainsKey((int)wParam))
+                hotkeys[(int)wParam].Execute();
 
             return new IntPtr(0);
         }
