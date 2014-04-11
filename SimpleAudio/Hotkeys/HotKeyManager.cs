@@ -53,6 +53,17 @@ namespace SimpleAudio.Hotkeys
 
         #endregion
 
+        private class IDGenerator
+        {
+            private int current = 1;
+
+            public int Next()
+            {
+                return current++;
+            }
+        }
+        private static readonly IDGenerator idgen = new IDGenerator();
+
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WM_HotKey)
