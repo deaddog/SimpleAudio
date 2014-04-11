@@ -1,6 +1,11 @@
-﻿namespace SimpleAudio.Hotkeys
+﻿using System;
+
+namespace SimpleAudio.Hotkeys
 {
-    public class HotKey
+    public partial class HotKeyManager
     {
+        private class HotKey
+        {
+        }
     }
 }
