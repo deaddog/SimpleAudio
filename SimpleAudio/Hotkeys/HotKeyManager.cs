@@ -122,10 +122,37 @@ namespace SimpleAudio.Hotkeys
 
         public bool RemoveHotKey(Key key, ModifierKeys modifier, Action action)
         {
+            if (key == Key.None)
+                throw new ArgumentException("A key was not specified for this hotkey.", "key");
+            if (modifier == ModifierKeys.None)
+                throw new ArgumentException("A modifier was not specified for this hotkey.", "modifiers");
+            if (action == null)
+                throw new ArgumentNullException("An action is required when adding a HotKey.", "action");
+
+            HotKey hk = hotkeys.Values.Where(x => x.Key == key && x.Modifiers == modifier).FirstOrDefault();
+            if (hk != null && hk.RemoveAction(action))
+            {
+                if (hk.Actions == 0)
+                    ClearHotKey(key, modifier);
+                return true;
+            }
+            else
+                return false;
         }
 
         public void ClearHotKey(Key key, ModifierKeys modifier)
         {
+            if (key == Key.None)
+                throw new ArgumentException("A key was not specified for this hotkey.", "key");
+            if (modifier == ModifierKeys.None)
+                throw new ArgumentException("A modifier was not specified for this hotkey.", "modifiers");
+
+            HotKey hk = hotkeys.Values.Where(x => x.Key == key && x.Modifiers == modifier).FirstOrDefault();
+            if (hk != null)
+            {
+                hotkeys.Remove(hk.Id);
+                UnregisterHotKey(hk.Id);
+            }
         }
 
 
