@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -101,6 +102,22 @@ namespace SimpleAudio.Hotkeys
 
         public void AddHotKey(Key key, ModifierKeys modifiers, Action action)
         {
+            if (key == Key.None)
+                throw new ArgumentException("A key was not specified for this hotkey.", "key");
+            if (modifiers == ModifierKeys.None)
+                throw new ArgumentException("A modifier was not specified for this hotkey.", "modifiers");
+            if (action == null)
+                throw new ArgumentNullException("An action is required when adding a HotKey.", "action");
+
+            HotKey hk = hotkeys.Values.Where(x => x.Key == key && x.Modifiers == modifiers).FirstOrDefault();
+            if (hk == null)
+            {
+                int id = idgen.Next();
+                hk = new HotKey(id, key, modifiers);
+                hotkeys.Add(id, hk);
+                RegisterHotKey(id, key, modifiers);
+            }
+            hk.AddAction(action);
         }
 
         public bool RemoveHotKey(Key key, ModifierKeys modifier, Action action)
