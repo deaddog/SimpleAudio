@@ -167,7 +167,7 @@ namespace SimpleAudio.Hotkeys
 
             while (hotkeys.Count > 0)
             {
-                HotKey hk = hotkeys[0];
+                HotKey hk = hotkeys.Values.First();
                 ClearHotKey(hk.Key, hk.Modifiers);
             }
 
