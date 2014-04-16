@@ -10,20 +10,44 @@ namespace SimpleAudio.Hotkeys
 {
     public partial class HotKeyManager
     {
+        private System.Windows.Window owner;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HotKeyManager"/> class.
         /// </summary>
-        /// <param name="hwndSource">The handle of the window. Must not be null.</param>
-        public HotKeyManager(HwndSource hwndSource)
+        /// <param name="window">The <see cref="System.Windows.Window"/> that handles the hotkeys associated with the manager.</param>
+        public HotKeyManager(System.Windows.Window window)
+        {
+            if (window == null)
+                throw new ArgumentNullException("window");
+            this.owner = window;
+            this.owner.Loaded += window_Loaded;
+
+            this.hook = new HwndSourceHook(WndProc);
+            this.hwndSource = null;
+
+            this.hotkeys = new Dictionary<int, HotKey>();
+        }
+
+        private void window_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            registerKeys((System.Windows.Interop.HwndSource)System.Windows.Interop.HwndSource.FromVisual(this.owner));
+            owner.Loaded -= window_Loaded;
+        }
+
+        private void registerKeys(HwndSource hwndSource)
         {
             if (hwndSource == null)
                 throw new ArgumentNullException("hwndSource");
 
-            this.hook = new HwndSourceHook(WndProc);
-            this.hwndSource = hwndSource;
-            hwndSource.AddHook(hook);
+            if (this.hwndSource != null)
+                throw new InvalidOperationException("HwndSource has already been set.");
 
-            this.hotkeys = new Dictionary<int, HotKey>();
+            this.hwndSource = hwndSource;
+            this.hwndSource.AddHook(this.hook);
+
+            foreach (var kvp in hotkeys)
+                RegisterHotKey(kvp.Key, kvp.Value.Key, kvp.Value.Modifiers);
         }
 
         #region HotKey Interop
@@ -48,6 +72,8 @@ namespace SimpleAudio.Hotkeys
 
         private void RegisterHotKey(int id, Key key, ModifierKeys modifiers)
         {
+            if (hwndSource == null)
+                return;
             if ((int)hwndSource.Handle != 0)
             {
                 RegisterHotKey(hwndSource.Handle, id, (int)modifiers, KeyInterop.VirtualKeyFromKey(key));
@@ -68,6 +94,8 @@ namespace SimpleAudio.Hotkeys
 
         private void UnregisterHotKey(int id)
         {
+            if (hwndSource == null)
+                return;
             if ((int)hwndSource.Handle != 0)
             {
                 UnregisterHotKey(hwndSource.Handle, id);
