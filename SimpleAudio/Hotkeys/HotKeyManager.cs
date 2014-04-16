@@ -21,10 +21,15 @@ namespace SimpleAudio.Hotkeys
             if (window == null)
                 throw new ArgumentNullException("window");
             this.owner = window;
-            this.owner.Loaded += window_Loaded;
 
             this.hook = new HwndSourceHook(WndProc);
-            this.hwndSource = null;
+            if (this.owner.IsLoaded)
+                registerKeys((System.Windows.Interop.HwndSource)System.Windows.Interop.HwndSource.FromVisual(this.owner));
+            else
+            {
+                this.owner.Loaded += window_Loaded;
+                this.hwndSource = null;
+            }
 
             this.hotkeys = new Dictionary<int, HotKey>();
         }
@@ -190,7 +195,7 @@ namespace SimpleAudio.Hotkeys
             if (disposed)
                 return;
 
-            if (disposing)
+            if (disposing && hwndSource != null)
                 hwndSource.RemoveHook(hook);
 
             while (hotkeys.Count > 0)
