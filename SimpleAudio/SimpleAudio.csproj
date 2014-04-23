@@ -108,6 +108,18 @@
       <Name>NotifyIconWpf</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headset.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headset_pause.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headset_play.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headset_stop.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
