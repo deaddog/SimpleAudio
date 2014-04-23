@@ -19,7 +19,7 @@
             </ListBox.Resources>
         </ListBox>
         <Label Content="Search For Tracks" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBox Margin="10,30,10,0" TextWrapping="Wrap" FontSize="11" Height="21" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="textbox" Margin="10,30,10,0" TextWrapping="Wrap" FontSize="11" Height="21" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
         <Label Content="Use Enter to enqueue a track, and Shift+Enter to jump to a track" FontSize="10" Foreground="#B2000000" HorizontalAlignment="Left" Width="293" Height="23" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

@@ -21,6 +21,7 @@ namespace SimpleAudio
     public partial class MainWindow : Window
     {
         private ScannerBackgroundWorker scanner;
+        private Hotkeys.HotKeyManager hotkeys;
 
         public MainWindow()
         {
@@ -29,6 +30,9 @@ namespace SimpleAudio
                 new DeadDog.Audio.Scan.AudioScanner(new DeadDog.Audio.MediaParser(), @"C:\Users\Mikkel\Music\"));
             scanner.FileParsed += scanner_FileParsed;
             scanner.RunAync();
+
+            hotkeys = new Hotkeys.HotKeyManager(this);
+            hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
         }
 
         void scanner_FileParsed(object sender, DeadDog.Audio.Scan.ScanFileEventArgs e)
@@ -46,7 +50,7 @@ namespace SimpleAudio
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                this.Hide();
 
             if (!listbox.IsFocused)
             {
