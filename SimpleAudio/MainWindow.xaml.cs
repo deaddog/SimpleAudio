@@ -69,7 +69,7 @@ namespace SimpleAudio
 
                 case Key.Down:
                 case Key.Up:
-                    if(listbox.IsFocused)
+                    if (listbox.IsFocused)
                     {
                         int i = listbox.SelectedIndex;
                         int c = listbox.Items.Count;
@@ -83,6 +83,7 @@ namespace SimpleAudio
 
                 default:
                     break;
+            }
 
             base.OnPreviewKeyDown(e);
         }
