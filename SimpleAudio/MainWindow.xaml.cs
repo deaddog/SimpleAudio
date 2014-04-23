@@ -61,19 +61,28 @@ namespace SimpleAudio
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-                this.Hide();
-
-            if (!listbox.IsFocused)
+            switch (e.Key)
             {
-                int s = listbox.SelectedIndex;
-                int c = listbox.Items.Count;
-                if (e.Key == Key.Down)
-                    listbox.SelectedIndex = s < c - 1 ? s + 1 : c - 1;
-                else if (e.Key == Key.Up)
-                    listbox.SelectedIndex = s > 0 ? s - 1 : 0;
-                listbox.ScrollIntoView(listbox.SelectedItem);
-            }
+                case Key.Escape:
+                    this.Hide();
+                    break;
+
+                case Key.Down:
+                case Key.Up:
+                    if(listbox.IsFocused)
+                    {
+                        int i = listbox.SelectedIndex;
+                        int c = listbox.Items.Count;
+                        if (e.Key == Key.Down)
+                            listbox.SelectedIndex = i < c - 1 ? i + 1 : c - 1;
+                        else
+                            listbox.SelectedIndex = i > 0 ? i - 1 : 0;
+                        listbox.ScrollIntoView(listbox.SelectedItem);
+                    }
+                    break;
+
+                default:
+                    break;
 
             base.OnPreviewKeyDown(e);
         }
