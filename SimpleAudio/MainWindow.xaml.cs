@@ -83,7 +83,7 @@ namespace SimpleAudio
             string text = (sender as TextBox).Text.Trim();
 
             listbox.Items.Filter =
-                track => DeadDog.Audio.Searching.Match((Track)track, DeadDog.Audio.SearchMethods.ContainsAll, text);
+                track => DeadDog.Audio.Searching.Match((Track)track, DeadDog.Audio.SearchMethods.ContainsAll, text.ToLower());
         }
     }
 }
