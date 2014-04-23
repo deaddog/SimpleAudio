@@ -29,6 +29,7 @@ namespace SimpleAudio
 
         private Library library;
         private LibraryPlaylist playlist;
+        private Player<Track> player;
 
         public MainWindow()
         {
@@ -36,6 +37,7 @@ namespace SimpleAudio
 
             library = new Library();
             playlist = new LibraryPlaylist(library);
+            player = new Player<Track>(playlist, new AudioControl<Track>(rt => rt.FilePath));
 
             scanner = new ScannerBackgroundWorker(
                 new AudioScanner(new MediaParser(), @"C:\Users\Mikkel\Music\"));
