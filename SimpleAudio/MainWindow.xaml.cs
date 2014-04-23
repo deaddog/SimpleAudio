@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DeadDog.Audio;
+using DeadDog.Audio.Playback;
+using DeadDog.Audio.Scan;
+using DeadDog.Audio.Libraries;
 
 namespace SimpleAudio
 {
@@ -23,11 +27,18 @@ namespace SimpleAudio
         private ScannerBackgroundWorker scanner;
         private Hotkeys.HotKeyManager hotkeys;
 
+        private Library library;
+        private LibraryPlaylist playlist;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            library = new Library();
+            playlist = new LibraryPlaylist(library);
+
             scanner = new ScannerBackgroundWorker(
-                new DeadDog.Audio.Scan.AudioScanner(new DeadDog.Audio.MediaParser(), @"C:\Users\Mikkel\Music\"));
+                new AudioScanner(new MediaParser(), @"C:\Users\Mikkel\Music\"));
             scanner.FileParsed += scanner_FileParsed;
             scanner.RunAync();
 
@@ -35,10 +46,9 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
         }
 
-        void scanner_FileParsed(object sender, DeadDog.Audio.Scan.ScanFileEventArgs e)
+        void scanner_FileParsed(object sender, ScanFileEventArgs e)
         {
-            if (e.State == DeadDog.Audio.Scan.FileState.Added)
-                listbox.Items.Add(e.Track);
+            listbox.Items.Add(library.AddTrack(e.Track));
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -70,8 +80,8 @@ namespace SimpleAudio
         {
             string text = (sender as TextBox).Text.Trim();
 
-            listbox.Items.Filter = 
-                track => DeadDog.Audio.Searching.Match((DeadDog.Audio.RawTrack)track, DeadDog.Audio.SearchMethods.ContainsAll, text);
+            listbox.Items.Filter =
+                track => DeadDog.Audio.Searching.Match((Track)track, DeadDog.Audio.SearchMethods.ContainsAll, text);
         }
     }
 }

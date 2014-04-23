@@ -9,11 +9,11 @@
                 <DataTemplate x:Key="TwoLineTracks">
                     <Grid Height="34" Width="534">
                         <StackPanel HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal" Margin="0,18,0,0">
-                            <Label Content="{Binding ArtistName, FallbackValue=[Artist]}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
-                            <Label Content="{Binding AlbumTitle, FallbackValue=[Album]}" ContentStringFormat=" - {0}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
-                            <Label Content="{Binding Path=TrackNumber, FallbackValue=[TracNumber]}" ContentStringFormat=" #{0}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
+                            <Label Content="{Binding Artist.Name, FallbackValue=[Artist]}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
+                            <Label Content="{Binding Album.Title, FallbackValue=[Album]}" ContentStringFormat=" - {0}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
+                            <Label Content="{Binding Tracknumber, FallbackValue=[TracNumber]}" ContentStringFormat=" #{0}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
                         </StackPanel>
-                        <Label Content="{Binding TrackTitle, FallbackValue=[Title]}" HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top"/>
+                        <Label Content="{Binding Title, FallbackValue=[Title]}" HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.Resources>
