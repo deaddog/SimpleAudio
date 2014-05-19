@@ -43,7 +43,7 @@ namespace SimpleAudio
             player.StatusChanged += player_StatusChanged;
 
             scanner = new ScannerBackgroundWorker(
-                new AudioScanner(new MediaParser(), @"C:\Users\Mikkel\Music\"));
+                new AudioScanner(new MediaParser(), @"C:\Users\Stefan\Music"));
             scanner.FileParsed += scanner_FileParsed;
             scanner.RunAync();
 
