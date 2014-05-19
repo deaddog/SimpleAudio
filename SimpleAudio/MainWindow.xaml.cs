@@ -16,6 +16,7 @@ using DeadDog.Audio;
 using DeadDog.Audio.Playback;
 using DeadDog.Audio.Scan;
 using DeadDog.Audio.Libraries;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace SimpleAudio
 {
@@ -26,6 +27,7 @@ namespace SimpleAudio
     {
         private ScannerBackgroundWorker scanner;
         private Hotkeys.HotKeyManager hotkeys;
+        private TaskbarIcon icon;
 
         private Library library;
         private LibraryPlaylist playlist;
@@ -38,14 +40,38 @@ namespace SimpleAudio
             library = new Library();
             playlist = new LibraryPlaylist(library);
             player = new Player<Track>(playlist, new AudioControl<Track>(rt => rt.FilePath));
+            player.StatusChanged += player_StatusChanged;
 
             scanner = new ScannerBackgroundWorker(
                 new AudioScanner(new MediaParser(), @"C:\Users\Mikkel\Music\"));
             scanner.FileParsed += scanner_FileParsed;
             scanner.RunAync();
 
+            icon = new TaskbarIcon();
+            icon.Icon = Properties.Resources.headset;
+
             hotkeys = new Hotkeys.HotKeyManager(this);
             hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
+        }
+
+        private void player_StatusChanged(object sender, EventArgs e)
+        {
+            switch (player.Status)
+            {
+                case PlayerStatus.Playing:
+                    icon.Icon = Properties.Resources.headset_play;
+                    break;
+                case PlayerStatus.Paused:
+                    icon.Icon = Properties.Resources.headset_pause;
+                    break;
+                case PlayerStatus.Stopped:
+                    icon.Icon = Properties.Resources.headset_stop;
+                    break;
+                case PlayerStatus.NoFileOpen:
+                default:
+                    icon.Icon = Properties.Resources.headset;
+                    break;
+            }
         }
 
         void scanner_FileParsed(object sender, ScanFileEventArgs e)
