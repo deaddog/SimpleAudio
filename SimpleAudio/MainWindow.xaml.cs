@@ -57,6 +57,8 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.Insert, ctal, () => player.Play());
             hotkeys.AddHotKey(Key.Home, ctal, () => player.Pause());
             hotkeys.AddHotKey(Key.End, ctal, () => player.Stop());
+            hotkeys.AddHotKey(Key.PageUp, ctal, () => playlist.MovePrevious());
+            hotkeys.AddHotKey(Key.PageDown, ctal, () => playlist.MoveNext());
         }
 
         private void player_StatusChanged(object sender, EventArgs e)
