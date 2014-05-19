@@ -59,6 +59,8 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.End, ctal, () => player.Stop());
             hotkeys.AddHotKey(Key.PageUp, ctal, () => playlist.MovePrevious());
             hotkeys.AddHotKey(Key.PageDown, ctal, () => playlist.MoveNext());
+
+            textbox.Focus();
         }
 
         private void player_StatusChanged(object sender, EventArgs e)
@@ -112,6 +114,11 @@ namespace SimpleAudio
                             listbox.SelectedIndex = i > 0 ? i - 1 : 0;
                         listbox.ScrollIntoView(listbox.SelectedItem);
                     }
+                    break;
+
+                case Key.Enter:
+                    if (listbox.SelectedItem != null)
+                        playlist.MoveToEntry(listbox.SelectedItem as Track);
                     break;
 
                 default:
