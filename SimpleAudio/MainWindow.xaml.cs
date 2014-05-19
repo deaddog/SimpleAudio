@@ -42,10 +42,18 @@ namespace SimpleAudio
             player = new Player<Track>(playlist, new AudioControl<Track>(rt => rt.FilePath));
             player.StatusChanged += player_StatusChanged;
 
-            scanner = new ScannerBackgroundWorker(
-                new AudioScanner(new MediaParser(), @"C:\Users\Stefan\Music"));
-            scanner.FileParsed += scanner_FileParsed;
-            scanner.RunAync();
+            XMLParser xml = new XMLParser();
+
+            Settings s = xml.LoadSettings("Settings.xml");
+
+            foreach (var path in s.Mediapaths)
+            {
+                scanner = new ScannerBackgroundWorker(
+                new AudioScanner(new MediaParser(), path));
+
+                scanner.FileParsed += scanner_FileParsed;
+                scanner.RunAync();
+            }
 
             icon = new TaskbarIcon();
             icon.Icon = Properties.Resources.headset;
