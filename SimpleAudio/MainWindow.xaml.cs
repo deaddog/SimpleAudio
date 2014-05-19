@@ -31,6 +31,8 @@ namespace SimpleAudio
 
         private Library library;
         private LibraryPlaylist playlist;
+        private Queue<Track> queue;
+        private QueuePlaylist<Track> queuePlaylist;
         private Player<Track> player;
 
         public MainWindow()
@@ -39,7 +41,11 @@ namespace SimpleAudio
 
             library = new Library();
             playlist = new LibraryPlaylist(library);
-            player = new Player<Track>(playlist, new AudioControl<Track>(rt => rt.FilePath));
+
+            queue = new Queue<Track>();
+            queuePlaylist = new QueuePlaylist<Track>(queue, playlist);
+
+            player = new Player<Track>(queuePlaylist, new AudioControl<Track>(rt => rt.FilePath));
             player.StatusChanged += player_StatusChanged;
 
             scanner = new ScannerBackgroundWorker(
@@ -59,7 +65,7 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.Home, ctal, () => player.Pause());
             hotkeys.AddHotKey(Key.End, ctal, () => player.Stop());
             hotkeys.AddHotKey(Key.PageUp, ctal, () => playlist.MovePrevious());
-            hotkeys.AddHotKey(Key.PageDown, ctal, () => playlist.MoveNext());
+            hotkeys.AddHotKey(Key.PageDown, ctal, () => queuePlaylist.MoveNext());
             hotkeys.AddHotKey(Key.Right, ctal, () => player.Seek(PlayerSeekOrigin.CurrentForwards, 5000));
             hotkeys.AddHotKey(Key.Left, ctal, () => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
 
@@ -139,6 +145,8 @@ namespace SimpleAudio
                             if (player.Status == PlayerStatus.Stopped)
                                 player.Play();
                         }
+                        else
+                            queue.Enqueue(listbox.SelectedItem as Track);
                     break;
 
                 case Key.LeftShift:
