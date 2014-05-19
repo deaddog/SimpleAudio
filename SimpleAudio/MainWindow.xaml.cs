@@ -133,7 +133,12 @@ namespace SimpleAudio
 
                 case Key.Enter:
                     if (listbox.SelectedItem != null)
-                        playlist.MoveToEntry(listbox.SelectedItem as Track);
+                        if (shiftDown)
+                        {
+                            playlist.MoveToEntry(listbox.SelectedItem as Track);
+                            if (player.Status == PlayerStatus.Stopped)
+                                player.Play();
+                        }
                     break;
 
                 case Key.LeftShift:
