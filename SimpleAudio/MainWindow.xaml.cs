@@ -50,8 +50,10 @@ namespace SimpleAudio
             icon = new TaskbarIcon();
             icon.Icon = Properties.Resources.headset;
 
+            var ctal = ModifierKeys.Control | ModifierKeys.Alt;
+
             hotkeys = new Hotkeys.HotKeyManager(this);
-            hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
+            hotkeys.AddHotKey(Key.J, ctal, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
         }
 
         private void player_StatusChanged(object sender, EventArgs e)
