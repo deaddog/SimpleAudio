@@ -29,6 +29,10 @@ namespace SimpleAudio
         public Settings LoadSettings(string path)
         {
             Settings settings = new Settings();
+
+            if (!File.Exists(path))
+                throw new FileNotFoundException("No settings.xml found");
+
             using (FileStream filestream = File.OpenRead(path))
             {
                 XmlReaderSettings s = new XmlReaderSettings();

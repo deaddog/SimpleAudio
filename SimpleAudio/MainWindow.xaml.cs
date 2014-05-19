@@ -17,6 +17,7 @@ using DeadDog.Audio.Playback;
 using DeadDog.Audio.Scan;
 using DeadDog.Audio.Libraries;
 using Hardcodet.Wpf.TaskbarNotification;
+using System.IO;
 
 namespace SimpleAudio
 {
@@ -44,7 +45,16 @@ namespace SimpleAudio
 
             XMLParser xml = new XMLParser();
 
-            Settings s = xml.LoadSettings("Settings.xml");
+            Settings s;
+
+            try
+            {
+                s = xml.LoadSettings("Settings.xml");
+            }
+            catch (FileNotFoundException e)
+            {
+                s = new Settings();
+            }
 
             foreach (var path in s.Mediapaths)
             {
