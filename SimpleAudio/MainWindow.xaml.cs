@@ -43,13 +43,11 @@ namespace SimpleAudio
             player = new Player<Track>(playlist, new AudioControl<Track>(rt => rt.FilePath));
             player.StatusChanged += player_StatusChanged;
 
-            XMLParser xml = new XMLParser();
-
             Settings s;
 
             try
             {
-                s = xml.LoadSettings("Settings.xml");
+                s = Settings.LoadSettings("Settings.xml");
             }
             catch (FileNotFoundException e)
             {

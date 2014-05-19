@@ -59,7 +59,6 @@
     <Compile Include="Hotkeys\HotKeyManager.cs" />
     <Compile Include="ScannerBackgroundWorker.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="XMLParser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
