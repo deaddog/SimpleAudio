@@ -54,11 +54,14 @@ namespace SimpleAudio
 
             hotkeys = new Hotkeys.HotKeyManager(this);
             hotkeys.AddHotKey(Key.J, ctal, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
+            hotkeys.AddHotKey(Key.Q, ctal, () => this.Close());
             hotkeys.AddHotKey(Key.Insert, ctal, () => player.Play());
             hotkeys.AddHotKey(Key.Home, ctal, () => player.Pause());
             hotkeys.AddHotKey(Key.End, ctal, () => player.Stop());
             hotkeys.AddHotKey(Key.PageUp, ctal, () => playlist.MovePrevious());
             hotkeys.AddHotKey(Key.PageDown, ctal, () => playlist.MoveNext());
+            hotkeys.AddHotKey(Key.Right, ctal, () => player.Seek(PlayerSeekOrigin.CurrentForwards, 5000));
+            hotkeys.AddHotKey(Key.Left, ctal, () => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
 
             textbox.Focus();
         }
