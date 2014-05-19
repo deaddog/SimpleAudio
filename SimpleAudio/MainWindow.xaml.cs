@@ -97,6 +97,18 @@ namespace SimpleAudio
             base.OnMouseLeftButtonDown(e);
         }
 
+        private bool shiftDown = false;
+        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        {
+            base.OnPreviewKeyUp(e);
+            switch (e.Key)
+            {
+                case Key.LeftShift:
+                case Key.RightShift:
+                    shiftDown = false;
+                    break;
+            }
+        }
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             switch (e.Key)
@@ -122,6 +134,11 @@ namespace SimpleAudio
                 case Key.Enter:
                     if (listbox.SelectedItem != null)
                         playlist.MoveToEntry(listbox.SelectedItem as Track);
+                    break;
+
+                case Key.LeftShift:
+                case Key.RightShift:
+                    shiftDown = true;
                     break;
 
                 default:
