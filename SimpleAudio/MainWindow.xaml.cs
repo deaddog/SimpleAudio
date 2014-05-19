@@ -17,6 +17,7 @@ using DeadDog.Audio.Playback;
 using DeadDog.Audio.Scan;
 using DeadDog.Audio.Libraries;
 using Hardcodet.Wpf.TaskbarNotification;
+using System.IO;
 
 namespace SimpleAudio
 {
@@ -42,10 +43,25 @@ namespace SimpleAudio
             player = new Player<Track>(playlist, new AudioControl<Track>(rt => rt.FilePath));
             player.StatusChanged += player_StatusChanged;
 
-            scanner = new ScannerBackgroundWorker(
-                new AudioScanner(new MediaParser(), @"C:\Users\Mikkel\Music\"));
-            scanner.FileParsed += scanner_FileParsed;
-            scanner.RunAync();
+            Settings s;
+
+            try
+            {
+                s = Settings.LoadSettings("Settings.xml");
+            }
+            catch (FileNotFoundException e)
+            {
+                s = new Settings();
+            }
+
+            foreach (var path in s.Mediapaths)
+            {
+                scanner = new ScannerBackgroundWorker(
+                new AudioScanner(new MediaParser(), path));
+
+                scanner.FileParsed += scanner_FileParsed;
+                scanner.RunAync();
+            }
 
             icon = new TaskbarIcon();
             icon.Icon = Properties.Resources.headset;
