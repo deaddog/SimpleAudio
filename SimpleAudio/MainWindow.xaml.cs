@@ -56,10 +56,11 @@ namespace SimpleAudio
             else
                 s = new Settings();
 
+            MediaParser parser = new MediaParser();
             foreach (var path in s.Mediapaths)
             {
                 scanner = new ScannerBackgroundWorker(
-                new AudioScanner(new MediaParser(), path));
+                new AudioScanner(parser, path));
 
                 scanner.FileParsed += scanner_FileParsed;
                 scanner.RunAync();
