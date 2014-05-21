@@ -50,15 +50,11 @@ namespace SimpleAudio
             player.StatusChanged += player_StatusChanged;
 
             Settings s;
-
-            try
-            {
-                s = Settings.LoadSettings("Settings.xml");
-            }
-            catch (FileNotFoundException e)
-            {
+            FileInfo file = new FileInfo(Properties.Settings.Default.settingsfile);
+            if (file.Exists)
+                s = Settings.LoadSettings(file.FullName);
+            else
                 s = new Settings();
-            }
 
             foreach (var path in s.Mediapaths)
             {
