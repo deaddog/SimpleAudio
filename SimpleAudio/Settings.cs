@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace SimpleAudio
 {
     public class Settings
     {
-        ///XML example Format
         /*
-         <?xml version="1.0" encoding="UTF-8"?>                     
-            <settings>  
-		        <media>   
-			        <local path="C:\Users\Stefan\Downloads"/>                                                
-			        <local path="C:\Users\Stefan\Music"/>                                       
-		        </media>
-            </settings>
-         */
+         * XML example Format
+         *
+           
+           <?xml version="1.0" encoding="UTF-8"?>
+           <settings>
+		       <media>
+			       <local path="C:\Users\Stefan\Downloads"/>
+			       <local path="C:\Users\Stefan\Music"/>
+		       </media>
+           </settings>
+           
+        */
 
         private List<String> mediapaths;
 
@@ -55,27 +55,14 @@ namespace SimpleAudio
             if (!File.Exists(path))
                 throw new FileNotFoundException("No settings.xml found");
 
-            using (FileStream filestream = File.OpenRead(path))
-            {
-                XmlReaderSettings s = new XmlReaderSettings();
-
-                using (XmlReader reader = XmlReader.Create(filestream, s))
-                {
-                    reader.ReadToFollowing("media");
-                    XmlReader inner = reader.ReadSubtree();
-                    settings.AddMediaPaths(ReadMedia(inner));
-                }
-            }
+            XDocument document = XDocument.Load(path);
+            var media = document.Element("settings").Element("media");
+            settings.AddMediaPaths(from e in media.Elements()
+                                   let p = e.Attribute("path")
+                                   where e.Name == "local" && p != null
+                                   select p.Value);
 
             return settings;
-        }
-        private static IEnumerable<string> ReadMedia(XmlReader media)
-        {
-            while (media.ReadToFollowing("local"))
-            {
-                media.MoveToFirstAttribute();
-                yield return media.ReadContentAsString();
-            }
         }
     }
 }
