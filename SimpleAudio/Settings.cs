@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SimpleAudio
 {
@@ -21,10 +22,16 @@ namespace SimpleAudio
             </Settings>
          */
 
+        private List<String> mediapaths;
 
-        List<String> mediapaths;
-
-        public List<String> Mediapaths{get{return mediapaths;}}
+        public IEnumerable<string> Mediapaths
+        {
+            get
+            {
+                foreach (var s in mediapaths)
+                    yield return s;
+            }
+        }
 
         public Settings()
         {
@@ -64,7 +71,6 @@ namespace SimpleAudio
         }
         private static IEnumerable<string> ReadMedia(XmlReader media)
         {
-
             while (media.ReadToFollowing("local"))
             {
                 media.MoveToFirstAttribute();
