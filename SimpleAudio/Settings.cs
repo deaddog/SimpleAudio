@@ -14,12 +14,12 @@ namespace SimpleAudio
         ///XML example Format
         /*
          <?xml version="1.0" encoding="UTF-8"?>                     
-            <Settings>  
+            <settings>  
 		        <media>   
 			        <local path="C:\Users\Stefan\Downloads"/>                                                
 			        <local path="C:\Users\Stefan\Music"/>                                       
 		        </media>
-            </Settings>
+            </settings>
          */
 
         private List<String> mediapaths;
