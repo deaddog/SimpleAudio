@@ -16,6 +16,8 @@
                         <Label Content="{Binding Title, FallbackValue=[Title]}" HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </DataTemplate>
+                <!-- Background of selected item when not focussed -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{x:Static SystemColors.HighlightColor}" />
             </ListBox.Resources>
         </ListBox>
         <Label Content="Search For Tracks" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
