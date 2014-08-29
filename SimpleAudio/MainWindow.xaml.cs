@@ -36,6 +36,8 @@ namespace SimpleAudio
         private QueuePlaylist<Track> queuePlaylist;
         private Player<Track> player;
 
+        private PopupWindow popup;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -73,7 +75,7 @@ namespace SimpleAudio
 
             hotkeys = new Hotkeys.HotKeyManager(this);
             hotkeys.AddHotKey(Key.J, ctal, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
-            hotkeys.AddHotKey(Key.Q, ctal, () => this.Close());
+            hotkeys.AddHotKey(Key.Q, ctal, () => { popup.Close(); this.Close(); });
             hotkeys.AddHotKey(Key.Insert, ctal, () => player.Play());
             hotkeys.AddHotKey(Key.Home, ctal, () => player.Pause());
             hotkeys.AddHotKey(Key.End, ctal, () => player.Stop());
@@ -81,6 +83,9 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.PageDown, ctal, () => queuePlaylist.MoveNext());
             hotkeys.AddHotKey(Key.Right, ctal, () => player.Seek(PlayerSeekOrigin.CurrentForwards, 5000));
             hotkeys.AddHotKey(Key.Left, ctal, () => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
+
+            popup = new PopupWindow(player);
+            hotkeys.AddHotKey(Key.Space, ctal, () => popup.Show());
 
             textbox.Focus();
         }
