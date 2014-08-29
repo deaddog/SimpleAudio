@@ -40,9 +40,9 @@ namespace SimpleAudio
             this.player.PositionChanged += (s, e) => this.Dispatcher.Invoke(player_PositionChanged);
         }
 
-        protected override void OnActivated(EventArgs e)
+        public void ShowPopup()
         {
-            base.OnActivated(e);
+            this.Show();
 
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
             this.Top = SystemParameters.WorkArea.Height - this.Height;

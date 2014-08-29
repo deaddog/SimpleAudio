@@ -85,7 +85,7 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.Left, ctal, () => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
 
             popup = new PopupWindow(player);
-            hotkeys.AddHotKey(Key.Space, ctal, () => popup.Show());
+            hotkeys.AddHotKey(Key.Space, ctal, () => popup.ShowPopup());
 
             textbox.Focus();
         }
