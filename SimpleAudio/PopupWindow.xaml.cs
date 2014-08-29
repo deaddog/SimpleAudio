@@ -33,6 +33,26 @@ namespace SimpleAudio
             : this()
         {
             this.player = player;
+            setTrack(player.Track);
+        }
+
+        private void setTrack(Track track)
+        {
+            if (track == null)
+            {
+                title.Content = "";
+                artist.Content = "";
+                album.Content = "";
+                time_length.Content = "0:00";
+                time_position.Content = "0:00";
+            }
+            else
+            {
+                title.Content = track.Title;
+                artist.Content = track.Artist.Name;
+                album.Content = track.Album.Title + " #" + track.Tracknumber;
+                time_length.Content = ToTime(player.Length);
+            }
         }
     }
 }
