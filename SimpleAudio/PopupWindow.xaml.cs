@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DeadDog.Audio;
+using DeadDog.Audio.Libraries;
+using DeadDog.Audio.Playback;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +22,17 @@ namespace SimpleAudio
     /// </summary>
     public partial class PopupWindow : Window
     {
+        private Player<Track> player = null;
+
         public PopupWindow()
         {
             InitializeComponent();
+        }
+
+        public PopupWindow(Player<Track> player)
+            : this()
+        {
+            this.player = player;
         }
     }
 }
