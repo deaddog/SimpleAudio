@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -38,6 +39,28 @@ namespace SimpleAudio
             this.player.TrackChanged += (s, e) => this.Dispatcher.Invoke(() => setTrack(player.Track));
             this.player.StatusChanged += (s, e) => this.Dispatcher.Invoke(player_StatusChanged);
             this.player.PositionChanged += (s, e) => this.Dispatcher.Invoke(player_PositionChanged);
+
+            this.Loaded += PopupWindow_Loaded;
+        }
+
+        private void PopupWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var s = (System.Windows.Interop.HwndSource)System.Windows.Interop.HwndSource.FromVisual(this);
+            s.AddHook(new HwndSourceHook(WndProc));
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            const int WM_MOUSEACTIVATE = 0x0021;
+            const int MA_NOACTIVATE = 3;
+
+            if (msg == WM_MOUSEACTIVATE)
+            {
+                handled = true;
+                return new IntPtr(MA_NOACTIVATE);
+            }
+
+            return IntPtr.Zero;
         }
 
         public void ShowPopup()
