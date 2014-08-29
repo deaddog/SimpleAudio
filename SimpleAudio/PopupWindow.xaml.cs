@@ -40,6 +40,8 @@ namespace SimpleAudio
             this.player.StatusChanged += (s, e) => this.Dispatcher.Invoke(player_StatusChanged);
             this.player.PositionChanged += (s, e) => this.Dispatcher.Invoke(player_PositionChanged);
 
+            TaskbarHider.HideMe(this);
+
             this.Loaded += PopupWindow_Loaded;
         }
 
