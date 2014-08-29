@@ -10,5 +10,10 @@
         <Label x:Name="title" Content="track title" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
         <Label x:Name="artist" Content="artist name" HorizontalAlignment="Left" Margin="114,75,0,0" VerticalAlignment="Top"/>
         <Label x:Name="album" Content="album title #track-number" HorizontalAlignment="Left" Margin="114,91,0,0" VerticalAlignment="Top"/>
+        <StackPanel HorizontalAlignment="Right" Margin="0,2,5,0" VerticalAlignment="Top" Orientation="Horizontal">
+            <Label Content="time" Foreground="White" FontSize="16"/>
+            <Label Content="/" Foreground="White" Margin="-8,-4,-8,0" FontSize="20"/>
+            <Label Content="length" Foreground="#FFA8CDF0" Margin="0,3,0,0" FontSize="13"/>
+        </StackPanel>
     </Grid>
 </Window>
