@@ -34,6 +34,8 @@ namespace SimpleAudio
         {
             this.player = player;
             setTrack(player.Track);
+
+            this.player.TrackChanged += (s, e) => this.Dispatcher.Invoke(() => setTrack(player.Track));
         }
 
         protected override void OnActivated(EventArgs e)
