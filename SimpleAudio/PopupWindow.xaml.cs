@@ -36,6 +36,14 @@ namespace SimpleAudio
             setTrack(player.Track);
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+            this.Top = SystemParameters.WorkArea.Height - this.Height;
+        }
+
         private void setTrack(Track track)
         {
             if (track == null)
