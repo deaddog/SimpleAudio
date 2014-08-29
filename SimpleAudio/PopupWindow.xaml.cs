@@ -36,6 +36,8 @@ namespace SimpleAudio
             setTrack(player.Track);
 
             this.player.TrackChanged += (s, e) => this.Dispatcher.Invoke(() => setTrack(player.Track));
+            this.player.StatusChanged += (s, e) => this.Dispatcher.Invoke(player_StatusChanged);
+            this.player.PositionChanged += (s, e) => this.Dispatcher.Invoke(player_PositionChanged);
         }
 
         protected override void OnActivated(EventArgs e)
@@ -62,6 +64,48 @@ namespace SimpleAudio
                 artist.Content = track.Artist.Name;
                 album.Content = track.Album.Title + " #" + track.Tracknumber;
                 time_length.Content = ToTime(player.Length);
+            }
+        }
+
+        private void player_PositionChanged()
+        {
+            if (!this.IsVisible)
+                return;
+
+            var p = player.PercentPlayed;
+
+            var w = this.ActualWidth * p;
+            Thickness th = progress.Margin;
+            th.Right = w;
+
+            progress.Margin = th;
+            time_position.Content = ToTime(player.Position);
+        }
+
+        private string ToTime(uint milliseconds)
+        {
+            milliseconds /= 1000;
+            var s = milliseconds % 60;
+            milliseconds -= s;
+            milliseconds /= 60;
+            var m = milliseconds;
+            return string.Format("{0:0}:{1:00}", m, s);
+        }
+
+        private void player_StatusChanged()
+        {
+            switch (player.Status)
+            {
+                case PlayerStatus.Playing:
+                    status.Content = "Playing";
+                    break;
+                case PlayerStatus.Paused:
+                    status.Content = "Paused";
+                    break;
+                case PlayerStatus.Stopped:
+                case PlayerStatus.NoFileOpen:
+                    status.Content = "Stopped";
+                    break;
             }
         }
     }
