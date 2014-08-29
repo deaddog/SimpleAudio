@@ -4,6 +4,7 @@
         Title="MainWindow" Height="148" Width="420" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1" Topmost="True" ShowInTaskbar="False">
     <Grid>
         <Rectangle Fill="#FF2E6292" Height="37" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
+        <Rectangle Fill="#FF84BCF0" Height="2" VerticalAlignment="Top" Margin="-1,34,-1,0" StrokeThickness="0"/>
         <Label Content="Playing" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         <Image x:Name="cover" HorizontalAlignment="Left" Height="100" Margin="5,41,0,0" VerticalAlignment="Top" Width="100" Stretch="Fill"/>
         <Label x:Name="title" Content="track title" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
