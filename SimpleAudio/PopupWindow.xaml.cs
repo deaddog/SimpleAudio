@@ -50,6 +50,8 @@ namespace SimpleAudio
 
         private void setTrack(Track track)
         {
+            string cover_source = null;
+
             if (track == null)
             {
                 title.Content = "";
@@ -64,6 +66,14 @@ namespace SimpleAudio
                 artist.Content = track.Artist.Name;
                 album.Content = track.Album.Title + " #" + track.Tracknumber;
                 time_length.Content = ToTime(player.Length);
+            }
+
+            if (cover_source == null)
+                cover.Visibility = System.Windows.Visibility.Collapsed;
+            else
+            {
+                cover.Visibility = System.Windows.Visibility.Visible;
+                throw new NotImplementedException();
             }
         }
 
