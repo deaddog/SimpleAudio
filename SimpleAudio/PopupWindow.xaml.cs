@@ -51,6 +51,20 @@ namespace SimpleAudio
             this.alphaTimer = new Timer(20);
             this.alphaTimer.AutoReset = true;
             this.alphaTimer.Elapsed += alphaTimer_Elapsed;
+
+            this.MouseEnter += PopupWindow_MouseEnter;
+            this.MouseLeave += PopupWindow_MouseLeave;
+        }
+
+        void PopupWindow_MouseEnter(object sender, MouseEventArgs e)
+        {
+            alphaTimer.Stop();
+            this.Opacity = 1;
+        }
+        void PopupWindow_MouseLeave(object sender, MouseEventArgs e)
+        {
+            countdownStart = DateTime.Now.AddSeconds(-WAIT_SEC);
+            alphaTimer.Start();
         }
 
         // Event handlers - named so that they can be removed when closing
