@@ -49,11 +49,9 @@ namespace SimpleAudio
             player = new Player<Track>(queuePlaylist, new AudioControl<Track>(rt => rt.FilePath));
             player.StatusChanged += player_StatusChanged;
 
-            MediaParser parser = new MediaParser();
             foreach (var path in App.CurrentApp.Settings.Mediapaths)
             {
-                scanner = new ScannerBackgroundWorker(
-                new AudioScanner(parser, path));
+                scanner = new ScannerBackgroundWorker(path);
 
                 scanner.FileParsed += scanner_FileParsed;
                 scanner.RunAync();

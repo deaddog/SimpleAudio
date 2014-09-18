@@ -36,9 +36,7 @@ namespace SimpleAudio
             this.cachepath = Path.ChangeExtension(Path.Combine(App.ApplicationDataPath, hash), "cache");
 
             if (File.Exists(cachepath))
-            {
-                throw new NotImplementedException();
-            }
+                this.scanner = AudioScanner.Load(parser, cachepath);
             else
                 this.scanner = new AudioScanner(parser, path);
 
@@ -67,6 +65,9 @@ namespace SimpleAudio
         }
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            using (FileStream fs = new FileStream(cachepath, FileMode.Create))
+                AudioScanner.Save(scanner, fs);
+
             if (ScanDone != null)
                 ScanDone(this, EventArgs.Empty);
         }
