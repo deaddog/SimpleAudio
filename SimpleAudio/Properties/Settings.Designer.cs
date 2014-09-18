@@ -22,14 +22,5 @@ namespace SimpleAudio.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("settings.xml")]
-        public string settingsfile {
-            get {
-                return ((string)(this["settingsfile"]));
-            }
-        }
     }
 }
