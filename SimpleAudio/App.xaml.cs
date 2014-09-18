@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace SimpleAudio
 {
@@ -9,7 +10,7 @@ namespace SimpleAudio
     /// </summary>
     public partial class App : Application
     {
-        private static string applicationDataPath;
+        private static readonly string applicationDataPath;
         public static string ApplicationDataPath
         {
             get { return applicationDataPath; }
@@ -24,7 +25,6 @@ namespace SimpleAudio
             ensurePath(roamingPath);
             applicationDataPath = roamingPath;
         }
-
         private static void ensurePath(string path)
         {
             string[] levels = path.Split(Path.DirectorySeparatorChar);
@@ -44,6 +44,33 @@ namespace SimpleAudio
                 if (!dir.Exists)
                     dir.Create();
             }
+        }
+
+        private string settingsPath;
+        private XDocument settingsDoc;
+        private Settings settings;
+        public Settings Settings
+        {
+            get { return settings; }
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            this.settingsPath = Path.Combine(applicationDataPath, "settings.xml");
+            this.settingsDoc = File.Exists(settingsPath) ? XDocument.Load(settingsPath) : new XDocument();
+
+            XElement settingsElement = settingsDoc.Element("settings");
+            if (settingsElement == null)
+                settingsDoc.Add(settingsElement = new XElement("settings"));
+
+            this.settings = new Settings(settingsElement);
+
+            base.OnStartup(e);
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            this.settingsDoc.Save(settingsPath);
+            base.OnExit(e);
         }
     }
 }
