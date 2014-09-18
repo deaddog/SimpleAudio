@@ -1,20 +1,45 @@
 ﻿using DeadDog.Audio.Scan;
 using System;
 using System.ComponentModel;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SimpleAudio
 {
     public class ScannerBackgroundWorker
     {
+        private static readonly DeadDog.Audio.Parsing.IDataParser parser = new DeadDog.Audio.MediaParser();
+        private static readonly MD5 md5 = MD5.Create();
+
+        private static string getHash(string text)
+        {
+            byte[] buffer = md5.ComputeHash(Encoding.UTF8.GetBytes(text));
+            StringBuilder sb = new StringBuilder(buffer.Length * 2);
+
+            foreach (byte b in buffer)
+                sb.AppendFormat("{0:x2}", b);
+
+            return sb.ToString();
+        }
+
         private BackgroundWorker worker;
         private AudioScanner scanner;
+        private readonly string cachepath;
 
-        public ScannerBackgroundWorker(AudioScanner scanner)
+        public ScannerBackgroundWorker(string path)
         {
-            if (scanner == null)
-                throw new ArgumentNullException("scanner");
+            if (path == null)
+                throw new ArgumentNullException("path");
 
-            this.scanner = scanner;
+            string hash = getHash(path);
+            this.cachepath = Path.ChangeExtension(Path.Combine(App.ApplicationDataPath, hash), "cache");
+
+            if (File.Exists(cachepath))
+                this.scanner = AudioScanner.Load(parser, cachepath);
+            else
+                this.scanner = new AudioScanner(parser, path);
+
             scanner.FileParsed += scanner_FileParsed;
 
             worker = new BackgroundWorker();
@@ -40,6 +65,9 @@ namespace SimpleAudio
         }
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            using (FileStream fs = new FileStream(cachepath, FileMode.Create))
+                AudioScanner.Save(scanner, fs);
+
             if (ScanDone != null)
                 ScanDone(this, EventArgs.Empty);
         }

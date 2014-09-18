@@ -22,47 +22,79 @@ namespace SimpleAudio
            
         */
 
-        private List<String> mediapaths;
+        private MediaPathCollection mediapaths;
 
-        public IEnumerable<string> Mediapaths
+        public MediaPathCollection Mediapaths
         {
-            get
+            get { return mediapaths; }
+        }
+
+        public Settings(XElement settingsElement)
+        {
+            XElement media = settingsElement.Element("media");
+            if (media == null)
+                settingsElement.Add(media = new XElement("media"));
+
+            this.mediapaths = new MediaPathCollection(media);
+        }
+
+        public class MediaPathCollection : IEnumerable<string>
+        {
+            private XElement mediaElement;
+            private List<string> paths;
+
+            public MediaPathCollection(XElement mediaElement)
             {
-                foreach (var s in mediapaths)
-                    yield return s;
+                this.mediaElement = mediaElement;
+                paths = new List<string>(from e in mediaElement.Elements()
+                                         let p = e.Attribute("path")
+                                         where e.Name == "local" && p != null
+                                         select p.Value);
             }
-        }
 
-        public Settings()
-        {
-            mediapaths = new List<string>();
-        }
+            public void Add(string path)
+            {
+                if (paths.Contains(path))
+                    throw new ArgumentException("A mediapath can only be added once.", "path");
 
-        public void AddMediaPaths(IEnumerable<string> mediapaths)
-        {
-            this.mediapaths.AddRange(mediapaths);
-        }
+                paths.Add(path);
+                mediaElement.Add(new XElement("local", new XAttribute("path", path)));
+            }
+            public bool Remove(string path)
+            {
+                if (!paths.Contains(path))
+                    return false;
 
-        /// <summary>
-        /// Load settings from an xmlfile into the application
-        /// </summary>
-        /// <param name="path">Path to the settings file</param>
-        /// <returns></returns>
-        public static Settings LoadSettings(string path)
-        {
-            Settings settings = new Settings();
+                paths.Remove(path);
+                var e = getElementFromPath(path);
 
-            if (!File.Exists(path))
-                throw new FileNotFoundException("No settings.xml found");
+                if (e != null)
+                    e.Remove();
 
-            XDocument document = XDocument.Load(path);
-            var media = document.Element("settings").Element("media");
-            settings.AddMediaPaths(from e in media.Elements()
-                                   let p = e.Attribute("path")
-                                   where e.Name == "local" && p != null
-                                   select p.Value);
+                return true;
+            }
 
-            return settings;
+            private XElement getElementFromPath(string path)
+            {
+                foreach (var e in mediaElement.Elements("local"))
+                {
+                    var a = e.Attribute("path");
+                    if (a != null && a.Value == path)
+                        return e;
+                }
+                return null;
+            }
+
+            IEnumerator<string> IEnumerable<string>.GetEnumerator()
+            {
+                foreach (var p in paths)
+                    yield return p;
+            }
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                foreach (var p in paths)
+                    yield return p;
+            }
         }
     }
 }
