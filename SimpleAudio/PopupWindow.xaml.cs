@@ -41,9 +41,9 @@ namespace SimpleAudio
             this.player = player;
             setTrack(player.Track);
 
-            this.player.TrackChanged += (s, e) => this.Dispatcher.Invoke(() => setTrack(player.Track));
-            this.player.StatusChanged += (s, e) => this.Dispatcher.Invoke(player_StatusChanged);
-            this.player.PositionChanged += (s, e) => this.Dispatcher.Invoke(player_PositionChanged);
+            this.player.TrackChanged += player_TrackChanged;
+            this.player.StatusChanged += player_StatusChanged;
+            this.player.PositionChanged += player_PositionChanged;
 
             TaskbarHider.HideMe(this);
             this.Loaded += PopupWindow_Loaded;
@@ -51,6 +51,31 @@ namespace SimpleAudio
             this.alphaTimer = new Timer(20);
             this.alphaTimer.AutoReset = true;
             this.alphaTimer.Elapsed += alphaTimer_Elapsed;
+        }
+
+        // Event handlers - named so that they can be removed when closing
+        void player_PositionChanged(object sender, PositionChangedEventArgs e)
+        {
+            this.Dispatcher.Invoke(player_PositionChanged);
+        }
+        void player_StatusChanged(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(player_StatusChanged);
+        }
+        void player_TrackChanged(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(() => setTrack(player.Track));
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            alphaTimer.Stop();
+
+            this.player.TrackChanged -= player_TrackChanged;
+            this.player.StatusChanged -= player_StatusChanged;
+            this.player.PositionChanged -= player_PositionChanged;
+
+            base.OnClosing(e);
         }
 
         private void alphaTimer_Elapsed(object sender, ElapsedEventArgs e)
