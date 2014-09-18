@@ -26,6 +26,7 @@ namespace SimpleAudio
         private BackgroundWorker worker;
         private AudioScanner scanner;
         private readonly string cachepath;
+        private bool loadScan;
 
         public ScannerBackgroundWorker(string path)
         {
@@ -36,9 +37,15 @@ namespace SimpleAudio
             this.cachepath = Path.ChangeExtension(Path.Combine(App.ApplicationDataPath, hash), "cache");
 
             if (File.Exists(cachepath))
+            {
                 this.scanner = AudioScanner.Load(parser, cachepath);
+                loadScan = true;
+            }
             else
+            {
                 this.scanner = new AudioScanner(parser, path);
+                loadScan = false;
+            }
 
             scanner.FileParsed += scanner_FileParsed;
 
@@ -70,6 +77,12 @@ namespace SimpleAudio
 
             if (ScanDone != null)
                 ScanDone(this, EventArgs.Empty);
+
+            if (loadScan)
+            {
+                loadScan = false;
+                worker.RunWorkerAsync();
+            }
         }
 
         public event EventHandler ScanDone;
