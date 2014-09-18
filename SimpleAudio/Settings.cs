@@ -22,47 +22,20 @@ namespace SimpleAudio
            
         */
 
-        private List<String> mediapaths;
+        private MediaPathCollection mediapaths;
 
-        public IEnumerable<string> Mediapaths
+        public MediaPathCollection Mediapaths
         {
-            get
-            {
-                foreach (var s in mediapaths)
-                    yield return s;
-            }
+            get { return mediapaths; }
         }
 
-        public Settings()
+        public Settings(XElement settingsElement)
         {
-            mediapaths = new List<string>();
-        }
+            XElement media = settingsElement.Element("media");
+            if (media == null)
+                settingsElement.Add(media = new XElement("media"));
 
-        public void AddMediaPaths(IEnumerable<string> mediapaths)
-        {
-            this.mediapaths.AddRange(mediapaths);
-        }
-
-        /// <summary>
-        /// Load settings from an xmlfile into the application
-        /// </summary>
-        /// <param name="path">Path to the settings file</param>
-        /// <returns></returns>
-        public static Settings LoadSettings(string path)
-        {
-            Settings settings = new Settings();
-
-            if (!File.Exists(path))
-                throw new FileNotFoundException("No settings.xml found");
-
-            XDocument document = XDocument.Load(path);
-            var media = document.Element("settings").Element("media");
-            settings.AddMediaPaths(from e in media.Elements()
-                                   let p = e.Attribute("path")
-                                   where e.Name == "local" && p != null
-                                   select p.Value);
-
-            return settings;
+            this.mediapaths = new MediaPathCollection(media);
         }
 
         public class MediaPathCollection : IEnumerable<string>
