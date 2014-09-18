@@ -46,6 +46,11 @@ namespace SimpleAudio
             }
         }
 
+        public static App CurrentApp
+        {
+            get { return SimpleAudio.App.Current as App; }
+        }
+
         private string settingsPath;
         private XDocument settingsDoc;
         private Settings settings;
