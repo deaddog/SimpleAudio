@@ -107,7 +107,7 @@ namespace SimpleAudio
             if (!this.IsVisible)
                 return;
 
-            var p = player.PercentPlayed;
+            var p = 1 - player.PercentPlayed;
 
             var w = this.ActualWidth * p;
             Thickness th = progress.Margin;
