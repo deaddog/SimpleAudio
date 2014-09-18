@@ -103,7 +103,28 @@ namespace SimpleAudio
 
         void scanner_FileParsed(object sender, ScanFileEventArgs e)
         {
-            listbox.Items.Add(library.AddTrack(e.Track));
+            switch (e.State)
+            {
+                case FileState.Added:
+                    listbox.Items.Add(library.AddTrack(e.Track));
+                    break;
+                case FileState.Updated:
+                    library.UpdateTrack(e.Track);
+                    listbox.Items.Refresh();
+                    break;
+
+                case FileState.Error:
+                case FileState.AddError:
+                case FileState.UpdateError:
+                case FileState.Skipped:
+                    break;
+
+                case FileState.Removed:
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
