@@ -1,11 +1,26 @@
 ﻿using DeadDog.Audio.Scan;
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SimpleAudio
 {
     public class ScannerBackgroundWorker
     {
+        private static readonly MD5 md5 = MD5.Create();
+
+        private static string getHash(string text)
+        {
+            byte[] buffer = md5.ComputeHash(Encoding.UTF8.GetBytes(text));
+            StringBuilder sb = new StringBuilder(buffer.Length * 2);
+
+            foreach (byte b in buffer)
+                sb.AppendFormat("{0:x2}", b);
+
+            return sb.ToString();
+        }
+
         private BackgroundWorker worker;
         private AudioScanner scanner;
 
