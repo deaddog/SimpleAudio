@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,6 +25,10 @@ namespace SimpleAudio
     public partial class PopupWindow : Window
     {
         private Player<Track> player = null;
+        private Timer alphaTimer = null;
+        private DateTime countdownStart;
+        private const double WAIT_SEC = 3;
+        private const double FADE_SEC = 3;
 
         public PopupWindow()
         {
@@ -41,8 +46,27 @@ namespace SimpleAudio
             this.player.PositionChanged += (s, e) => this.Dispatcher.Invoke(player_PositionChanged);
 
             TaskbarHider.HideMe(this);
-
             this.Loaded += PopupWindow_Loaded;
+
+            this.alphaTimer = new Timer(20);
+            this.alphaTimer.AutoReset = true;
+            this.alphaTimer.Elapsed += alphaTimer_Elapsed;
+        }
+
+        private void alphaTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var diff = (e.SignalTime - countdownStart).TotalSeconds;
+            diff -= WAIT_SEC;
+            if (diff > 0)
+            {
+                if (diff >= FADE_SEC)
+                {
+                    alphaTimer.Stop();
+                    this.Dispatcher.Invoke(() => this.Hide());
+                }
+                else
+                    this.Dispatcher.Invoke(() => this.Opacity = 1 - (diff / FADE_SEC));
+            }
         }
 
         private void PopupWindow_Loaded(object sender, RoutedEventArgs e)
@@ -71,6 +95,11 @@ namespace SimpleAudio
 
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
             this.Top = SystemParameters.WorkArea.Height - this.Height;
+
+            alphaTimer.Stop();
+            countdownStart = DateTime.Now;
+            alphaTimer.Start();
+            this.Opacity = 1;
         }
 
         private void setTrack(Track track)
