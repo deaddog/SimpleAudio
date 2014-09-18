@@ -1,6 +1,7 @@
 ﻿using DeadDog.Audio.Scan;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace SimpleAudio
 {
     public class ScannerBackgroundWorker
     {
+        private static readonly DeadDog.Audio.Parsing.IDataParser parser = new DeadDog.Audio.MediaParser();
         private static readonly MD5 md5 = MD5.Create();
 
         private static string getHash(string text)
@@ -23,13 +25,23 @@ namespace SimpleAudio
 
         private BackgroundWorker worker;
         private AudioScanner scanner;
+        private readonly string cachepath;
 
-        public ScannerBackgroundWorker(AudioScanner scanner)
+        public ScannerBackgroundWorker(string path)
         {
-            if (scanner == null)
-                throw new ArgumentNullException("scanner");
+            if (path == null)
+                throw new ArgumentNullException("path");
 
-            this.scanner = scanner;
+            string hash = getHash(path);
+            this.cachepath = Path.ChangeExtension(Path.Combine(App.ApplicationDataPath, hash), "cache");
+
+            if (File.Exists(cachepath))
+            {
+                throw new NotImplementedException();
+            }
+            else
+                this.scanner = new AudioScanner(parser, path);
+
             scanner.FileParsed += scanner_FileParsed;
 
             worker = new BackgroundWorker();
