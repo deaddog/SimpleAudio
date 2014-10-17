@@ -30,9 +30,26 @@ namespace SimpleAudio
         private const double WAIT_SEC = 3;
         private const double FADE_SEC = 3;
 
+        private BitmapImage playImage, pauseImage, stopImage;
+
         public PopupWindow()
         {
             InitializeComponent();
+
+            playImage = new BitmapImage();
+            playImage.BeginInit();
+            playImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/play.png");
+            playImage.EndInit();
+
+            pauseImage = new BitmapImage();
+            pauseImage.BeginInit();
+            pauseImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/pause.png");
+            pauseImage.EndInit();
+
+            stopImage = new BitmapImage();
+            stopImage.BeginInit();
+            stopImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/stop.png");
+            stopImage.EndInit();
         }
 
         public PopupWindow(Player<Track> player)
