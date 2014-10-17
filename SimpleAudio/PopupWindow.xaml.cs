@@ -218,13 +218,16 @@ namespace SimpleAudio
             {
                 case PlayerStatus.Playing:
                     status.Content = "Playing";
+                    status_icon.Source = playImage;
                     break;
                 case PlayerStatus.Paused:
                     status.Content = "Paused";
+                    status_icon.Source = pauseImage;
                     break;
                 case PlayerStatus.Stopped:
                 case PlayerStatus.NoFileOpen:
                     status.Content = "Stopped";
+                    status_icon.Source = stopImage;
                     break;
             }
         }
