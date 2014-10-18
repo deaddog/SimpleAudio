@@ -233,5 +233,51 @@ namespace SimpleAudio
                     break;
             }
         }
+
+        private void ImagePanel_Drop(object sender, DragEventArgs e)
+        {
+            string file = getFile(e);
+
+            if (file != null && player.Track != null && player.Track.Album != null && !player.Track.Album.IsUnknown)
+            {
+                var cover_source = coverLoader.LoadLocally(player.Track.Album, file);
+
+                if (cover_source == null)
+                    cover_border.Visibility = System.Windows.Visibility.Collapsed;
+                else
+                    cover_border.Visibility = System.Windows.Visibility.Visible;
+
+                cover.Source = cover_source;
+            }
+        }
+
+        private void ImagePanel_DragEnter(object sender, DragEventArgs e)
+        {
+            alphaTimer.Stop();
+            this.Opacity = 1;
+
+            string file = getFile(e);
+            if (file == null || player.Track == null || player.Track.Album == null || player.Track.Album.IsUnknown)
+                e.Effects = DragDropEffects.None;
+        }
+
+        private string getFile(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (files.Length != 1)
+                    return null;
+
+                string file = files[0];
+                if (!System.IO.File.Exists(file))
+                    return null;
+
+                return file;
+            }
+            else
+                return null;
+        }
     }
 }
