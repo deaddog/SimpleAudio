@@ -66,6 +66,21 @@ namespace SimpleAudio
 
         private void loadFromAudioDb(string artistName, string albumTitle)
         {
+            string albumJson = queryJson(getSearchURL(artistName, albumTitle));
+
+            JArray albums = JObject.Parse(albumJson)["album"] as JArray;
+            if (albums != null && albums.Count > 0)
+            {
+                JObject album = albums[0] as JObject;
+                if (album != null)
+                {
+                    string cover = (album["strAlbumThumb"] as JValue).Value<string>();
+                    if (cover != null)
+                    {
+                        downloadFile(cover + "/preview", getFilePath(artistName, albumTitle));
+                    }
+                }
+            }
         }
 
         private string getFilePath(string artist, string album)
