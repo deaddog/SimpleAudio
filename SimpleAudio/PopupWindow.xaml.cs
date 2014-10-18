@@ -31,6 +31,7 @@ namespace SimpleAudio
         private const double FADE_SEC = 3;
 
         private BitmapImage playImage, pauseImage, stopImage;
+        private CoverLoader coverLoader;
 
         public PopupWindow()
         {
@@ -50,6 +51,8 @@ namespace SimpleAudio
             stopImage.BeginInit();
             stopImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/stop.png");
             stopImage.EndInit();
+
+            coverLoader = new CoverLoader();
         }
 
         public PopupWindow(Player<Track> player)
@@ -160,8 +163,6 @@ namespace SimpleAudio
 
         private void setTrack(Track track)
         {
-            string cover_source = null;
-
             if (track == null)
             {
                 title.Content = "";
@@ -178,13 +179,14 @@ namespace SimpleAudio
                 time_length.Content = ToTime(player.Length);
             }
 
+            var cover_source = track == null ? null : coverLoader[track.Album];
+
             if (cover_source == null)
                 cover.Visibility = System.Windows.Visibility.Collapsed;
             else
-            {
                 cover.Visibility = System.Windows.Visibility.Visible;
-                throw new NotImplementedException();
-            }
+
+            cover.Source = cover_source;
         }
 
         private void player_PositionChanged()
