@@ -72,11 +72,11 @@ namespace SimpleAudio
             this.alphaTimer.AutoReset = true;
             this.alphaTimer.Elapsed += alphaTimer_Elapsed;
 
-            this.MouseEnter += PopupWindow_MouseEnter;
+            this.MouseMove += PopupWindow_MouseMove;
             this.MouseLeave += PopupWindow_MouseLeave;
         }
 
-        void PopupWindow_MouseEnter(object sender, MouseEventArgs e)
+        void PopupWindow_MouseMove(object sender, MouseEventArgs e)
         {
             alphaTimer.Stop();
             this.Opacity = 1;
