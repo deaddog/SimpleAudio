@@ -44,7 +44,7 @@ namespace SimpleAudio
         {
             get
             {
-                if(album.IsUnknown)
+                if (album.IsUnknown)
                     return null;
                 if (album.HasArtist && !album.Artist.IsUnknown)
                     return this[album.Artist.Name, album.Title];
@@ -66,14 +66,26 @@ namespace SimpleAudio
                     if (!File.Exists(filepath))
                         loadFromAudioDb(artist, album);
 
-                    image = File.Exists(filepath) ?
-                        new BitmapImage(new Uri(filepath, UriKind.Absolute)) : null;
+                    image = File.Exists(filepath) ? loadBitmapImageFromFile(filepath) : null;
 
                     images.Add(key, image);
                 }
 
                 return image;
             }
+        }
+
+        private static BitmapImage loadBitmapImageFromFile(string filepath)
+        {
+            var bitmap = new BitmapImage();
+            var stream = File.OpenRead(filepath);
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.StreamSource = stream;
+            bitmap.EndInit();
+            stream.Close();
+            stream.Dispose();
+            return bitmap;
         }
 
         private static Tuple<string, string> getKey(string artist, string album)
