@@ -42,7 +42,26 @@ namespace SimpleAudio
 
         public BitmapImage this[string artist, string album]
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                var key = getKey(artist, album);
+                BitmapImage image;
+
+                if (!images.TryGetValue(key, out image))
+                {
+                    string filepath = getFilePath(artist, album);
+
+                    if (!File.Exists(filepath))
+                        loadFromAudioDb(artist, album);
+
+                    image = File.Exists(filepath) ?
+                        new BitmapImage(new Uri(filepath, UriKind.Absolute)) : null;
+
+                    images.Add(key, image);
+                }
+
+                return image;
+            }
         }
 
         private static Tuple<string, string> getKey(string artist, string album)
