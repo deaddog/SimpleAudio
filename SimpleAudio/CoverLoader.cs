@@ -40,6 +40,18 @@ namespace SimpleAudio
             this.images = new Dictionary<Tuple<string, string>, BitmapImage>();
         }
 
+        public BitmapImage this[DeadDog.Audio.Libraries.Album album]
+        {
+            get
+            {
+                if(album.IsUnknown)
+                    return null;
+                if (album.HasArtist && !album.Artist.IsUnknown)
+                    return this[album.Artist.Name, album.Title];
+                else
+                    return this[null, album.Title];
+            }
+        }
         public BitmapImage this[string artist, string album]
         {
             get
