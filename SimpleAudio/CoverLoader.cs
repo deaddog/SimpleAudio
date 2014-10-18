@@ -25,6 +25,33 @@ namespace SimpleAudio
             return sb.ToString();
         }
 
+        private string getFilePath(string artist, string album)
+        {
+            if (artist != null)
+            {
+                artist = artist.Trim();
+                if (artist.Length == 0)
+                    artist = null;
+            }
+
+            if (album == null)
+                throw new ArgumentNullException("album");
+
+            if (album != null) album = album.Trim();
+            if (album.Length == 0)
+                throw new ArgumentException("Cannot query an empty album name.");
+
+            string format = artist == null ?
+                "{1}.jpg" :
+                "{0}_{1}.jpg";
+
+            string filename = string.Format(format, hashString(artist), hashString(album));
+            string directory = Path.Combine(App.ApplicationDataPath, "covers");
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            return Path.Combine(directory, filename);
+        }
         private string getSearchURL(string artist, string album)
         {
             if (artist != null)
