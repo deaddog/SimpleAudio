@@ -7,12 +7,13 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace SimpleAudio
 {
     public class CoverLoader
     {
-        private const int AUDIO_DB_API_KEY = 1;
+        private const int AUDIO_DB_API_KEY_TEST = 1;
         private static MD5 hashing = MD5.Create();
 
         private static string hashString(string input)
@@ -27,6 +28,13 @@ namespace SimpleAudio
                 sb.AppendFormat("{0:x2}", b);
 
             return sb.ToString();
+        }
+
+        private readonly int api_key;
+
+        public CoverLoader(int api_key = AUDIO_DB_API_KEY_TEST)
+        {
+            this.api_key = api_key;
         }
 
         private void loadFromAudioDb(string artistName, string albumTitle)
@@ -80,7 +88,7 @@ namespace SimpleAudio
                 "http://www.theaudiodb.com/api/v1/json/{0}/searchalbum.php?a={2}" :
                 "http://www.theaudiodb.com/api/v1/json/{0}/searchalbum.php?s={1}&a={2}";
 
-            return string.Format(format, AUDIO_DB_API_KEY, artist, album);
+            return string.Format(format, api_key, artist, album);
         }
 
         private string queryJson(string url)
