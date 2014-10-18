@@ -16,6 +16,9 @@ namespace SimpleAudio
 
         private static string hashString(string input)
         {
+            if (input == null || input.Length == 0)
+                return null;
+
             StringBuilder sb = new StringBuilder();
 
             byte[] hash = hashing.ComputeHash(Encoding.UTF8.GetBytes(input));
