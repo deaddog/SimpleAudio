@@ -75,6 +75,23 @@ namespace SimpleAudio
             }
         }
 
+        public BitmapImage LoadLocally(DeadDog.Audio.Libraries.Album album, string filepath)
+        {
+            var key = getKey(album);
+            if (key == null)
+                return null;
+
+            string localpath = getFilePath(key.Item1, key.Item2);
+
+            var image = System.Drawing.Image.FromFile(filepath);
+            image.Save(localpath);
+            image.Dispose();
+
+            images[key] = loadBitmapImageFromFile(filepath);
+
+            return images[key];
+        }
+
         private static BitmapImage loadBitmapImageFromFile(string filepath)
         {
             var bitmap = new BitmapImage();
@@ -105,6 +122,15 @@ namespace SimpleAudio
                 throw new ArgumentException("Cannot query an empty album name.");
 
             return Tuple.Create(artist, album);
+        }
+        private static Tuple<string, string> getKey(DeadDog.Audio.Libraries.Album album)
+        {
+            if (album.IsUnknown)
+                return null;
+            if (album.HasArtist && !album.Artist.IsUnknown)
+                return Tuple.Create(album.Artist.Name, album.Title);
+            else
+                return new Tuple<string, string>(null, album.Title);
         }
 
         private void loadFromAudioDb(string artistName, string albumTitle)
