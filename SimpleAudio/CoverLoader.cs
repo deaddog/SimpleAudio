@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,18 @@ namespace SimpleAudio
     public class CoverLoader
     {
         private const int AUDIO_DB_API_KEY = 1;
+        private static MD5 hashing = MD5.Create();
+
+        private static string hashString(string input)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            byte[] hash = hashing.ComputeHash(Encoding.UTF8.GetBytes(input));
+            foreach (var b in hash)
+                sb.AppendFormat("{0:x2}", b);
+
+            return sb.ToString();
+        }
 
         private string getSearchURL(string artist, string album)
         {
