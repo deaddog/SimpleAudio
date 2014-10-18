@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CoverLoader.cs" />
     <Compile Include="Hotkeys\HotKey.cs" />
     <Compile Include="Hotkeys\HotKeyAlreadyRegisteredException.cs" />
     <Compile Include="Hotkeys\HotKeyManager.cs" />
