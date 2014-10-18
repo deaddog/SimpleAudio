@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,10 @@ namespace SimpleAudio
                 sb.AppendFormat("{0:x2}", b);
 
             return sb.ToString();
+        }
+
+        private void loadFromAudioDb(string artistName, string albumTitle)
+        {
         }
 
         private string getFilePath(string artist, string album)
