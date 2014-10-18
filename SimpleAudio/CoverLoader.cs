@@ -35,9 +35,24 @@ namespace SimpleAudio
             return string.Format(format, AUDIO_DB_API_KEY, artist, album);
         }
 
-        private string queryURL(string url)
+        private string queryJson(string url)
         {
-            MemoryStream stream = new MemoryStream();
+            string result;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                queryURL(url, stream);
+                result = Encoding.UTF8.GetString(stream.GetBuffer());
+            }
+            return result;
+        }
+        private void downloadFile(string url, string filepath)
+        {
+            using (FileStream fs = new FileStream(filepath, FileMode.Create))
+                queryURL(url, fs);
+        }
+
+        private void queryURL(string url, Stream stream)
+        {
             byte[] buf = new byte[8192];
 
             HttpWebRequest request;
@@ -55,7 +70,7 @@ namespace SimpleAudio
             }
             catch
             {
-                return null;
+                return;
             }
             finally
             {
@@ -70,11 +85,6 @@ namespace SimpleAudio
                     response.Dispose();
                 }
             }
-
-            string result = Encoding.UTF8.GetString(stream.GetBuffer());
-            stream.Dispose();
-
-            return result;
         }
 
         private void copyStream(Stream source, Stream destination)
