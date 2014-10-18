@@ -30,11 +30,19 @@ namespace SimpleAudio
             return sb.ToString();
         }
 
+        private Dictionary<Tuple<string, string>, BitmapImage> images;
+
         private readonly int api_key;
 
         public CoverLoader(int api_key = AUDIO_DB_API_KEY_TEST)
         {
             this.api_key = api_key;
+            this.images = new Dictionary<Tuple<string, string>, BitmapImage>();
+        }
+
+        public BitmapImage this[string artist, string album]
+        {
+            get { throw new NotImplementedException(); }
         }
 
         private void loadFromAudioDb(string artistName, string albumTitle)
