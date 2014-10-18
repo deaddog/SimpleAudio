@@ -14,7 +14,9 @@
             <Label x:Name="time_length" Content="length" Foreground="#FFA8CDF0" Margin="0,3,0,0" FontSize="13"/>
         </StackPanel>
         <StackPanel Height="100" Orientation="Horizontal" Margin="5,41,5,5">
-            <Image x:Name="cover" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Stretch="Fill"/>
+            <Border x:Name="cover_border" BorderThickness="1" BorderBrush="Black">
+                <Image x:Name="cover" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Stretch="Fill"/>
+            </Border>
             <StackPanel Height="100">
                 <Label x:Name="title" Content="track title" HorizontalAlignment="Left" Margin="0,16,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
                 <Label x:Name="artist" Content="artist name" HorizontalAlignment="Left" Margin="4,-11,0,0" VerticalAlignment="Top"/>

@@ -182,9 +182,9 @@ namespace SimpleAudio
             var cover_source = track == null ? null : coverLoader[track.Album];
 
             if (cover_source == null)
-                cover.Visibility = System.Windows.Visibility.Collapsed;
+                cover_border.Visibility = System.Windows.Visibility.Collapsed;
             else
-                cover.Visibility = System.Windows.Visibility.Visible;
+                cover_border.Visibility = System.Windows.Visibility.Visible;
 
             cover.Source = cover_source;
         }
