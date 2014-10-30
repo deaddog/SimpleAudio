@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -33,10 +34,12 @@ namespace SimpleAudio
         private Dictionary<Tuple<string, string>, BitmapImage> images;
 
         private readonly int api_key;
+        private readonly Size imageSize;
 
-        public CoverLoader(int api_key = AUDIO_DB_API_KEY_TEST)
+        public CoverLoader(Size imageSize, int api_key = AUDIO_DB_API_KEY_TEST)
         {
             this.api_key = api_key;
+            this.imageSize = imageSize;
             this.images = new Dictionary<Tuple<string, string>, BitmapImage>();
         }
 
@@ -83,7 +86,7 @@ namespace SimpleAudio
 
             string localpath = getFilePath(key.Item1, key.Item2);
 
-            var image = System.Drawing.Image.FromFile(filepath);
+            var image = Image.FromFile(filepath);
             image.Save(localpath);
             image.Dispose();
 
@@ -92,17 +95,28 @@ namespace SimpleAudio
             return images[key];
         }
 
-        private static BitmapImage loadBitmapImageFromFile(string filepath)
+        private BitmapImage loadBitmapImageFromFile(string filepath)
         {
-            var bitmap = new BitmapImage();
-            var stream = File.OpenRead(filepath);
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.StreamSource = stream;
-            bitmap.EndInit();
+            var bitmap = new Bitmap(imageSize.Width, imageSize.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            using (var graphics = Graphics.FromImage(bitmap))
+            using (var tempImage = Image.FromFile(filepath))
+            {
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.DrawImage(tempImage, new Rectangle(0, 0, imageSize.Width, imageSize.Height));
+            }
+
+            MemoryStream stream = new MemoryStream();
+            bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.StreamSource = stream;
+            bitmapImage.EndInit();
             stream.Close();
             stream.Dispose();
-            return bitmap;
+            bitmap.Dispose();
+            return bitmapImage;
         }
 
         private static Tuple<string, string> getKey(string artist, string album)
@@ -144,7 +158,7 @@ namespace SimpleAudio
                 if (album != null)
                 {
                     string cover = (album["strAlbumThumb"] as JValue).Value<string>();
-                    if (cover != null)
+                    if (cover != null && cover != "")
                     {
                         downloadFile(cover + "/preview", getFilePath(artistName, albumTitle));
                     }

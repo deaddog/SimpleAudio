@@ -52,7 +52,7 @@ namespace SimpleAudio
             stopImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/stop.png");
             stopImage.EndInit();
 
-            coverLoader = new CoverLoader();
+            coverLoader = new CoverLoader(new System.Drawing.Size(100, 100));
         }
 
         public PopupWindow(Player<Track> player)
