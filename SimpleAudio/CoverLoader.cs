@@ -210,7 +210,7 @@ namespace SimpleAudio
                 throw new ArgumentException("Cannot query an empty album name.");
 
             string format = artist == null ?
-                "http://www.theaudiodb.com/api/v1/json/{0}/searchalbum.php?a={2}" :
+                "http://www.theaudiodb.com/api/v1/json/{0}/searchalbum.php?s=Various%20Artists&a={2}" :
                 "http://www.theaudiodb.com/api/v1/json/{0}/searchalbum.php?s={1}&a={2}";
 
             return string.Format(format, api_key, artist, album);
