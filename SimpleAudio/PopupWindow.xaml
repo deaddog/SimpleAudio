@@ -3,17 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="148" Width="420" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1" Topmost="True" ShowInTaskbar="False" ShowActivated="False"
         Drop="ImagePanel_Drop" DragEnter="ImagePanel_DragEnter" AllowDrop="true">
-    <Grid>
-        <Rectangle Fill="#FF2E6292" Height="37" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
-        <Rectangle x:Name="progress" Fill="#FF84BCF0" Height="2" VerticalAlignment="Top" Margin="-1,34,-1,0" StrokeThickness="0"/>
-        <Image x:Name="status_icon" Height="11" Margin="10,13,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="11" Source="pack://siteoforigin:,,,/Resources/stop.png"/>
-        <Label x:Name="status" Content="Stopped" HorizontalAlignment="Left" Margin="21,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <StackPanel HorizontalAlignment="Right" Margin="0,2,5,0" VerticalAlignment="Top" Orientation="Horizontal">
-            <Label x:Name="time_position" Content="time" Foreground="White" FontSize="16"/>
-            <Label Content="/" Foreground="White" Margin="-8,-4,-8,0" FontSize="20"/>
-            <Label x:Name="time_length" Content="length" Foreground="#FFA8CDF0" Margin="0,3,0,0" FontSize="13"/>
-        </StackPanel>
-        <StackPanel Height="100" Orientation="Horizontal" Margin="5,41,5,5">
+    <StackPanel>
+        <Grid>
+            <Rectangle Fill="#FF2E6292" Height="37" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
+            <Rectangle x:Name="progress" Fill="#FF84BCF0" Height="2" VerticalAlignment="Top" Margin="-1,34,-1,0" StrokeThickness="0"/>
+            <Image x:Name="status_icon" Height="11" Margin="10,13,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="11" Source="pack://siteoforigin:,,,/Resources/stop.png"/>
+            <Label x:Name="status" Content="Stopped" HorizontalAlignment="Left" Margin="21,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+            <StackPanel HorizontalAlignment="Right" Margin="0,2,5,0" VerticalAlignment="Top" Orientation="Horizontal">
+                <Label x:Name="time_position" Content="time" Foreground="White" FontSize="16"/>
+                <Label Content="/" Foreground="White" Margin="-8,-4,-8,0" FontSize="20"/>
+                <Label x:Name="time_length" Content="length" Foreground="#FFA8CDF0" Margin="0,3,0,0" FontSize="13"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Height="100" Orientation="Horizontal" Margin="5,5,5,5">
             <Border x:Name="cover_border" BorderThickness="1" BorderBrush="Black">
                 <Image x:Name="cover" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Stretch="Fill"/>
             </Border>
@@ -23,5 +25,5 @@
                 <Label x:Name="album" Content="album title #track-number" HorizontalAlignment="Left" Margin="4,-12,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>
