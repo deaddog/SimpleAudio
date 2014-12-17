@@ -25,5 +25,22 @@
                 <Label x:Name="album" Content="album title #track-number" HorizontalAlignment="Left" Margin="4,-12,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
+        <StackPanel Visibility="Collapsed" x:Name="QField" Height="40" Orientation="Horizontal" Margin="5,5,5,5">
+            <Border BorderThickness="1" BorderBrush="Black">
+                <Image HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="40" Stretch="Fill"/>
+            </Border>
+            <Grid>
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Label Content="track title" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+                    <Label Content="by" VerticalAlignment="Top" Margin="-5,2,0,0" Foreground="Gray"/>
+                    <Label Content="artist name" VerticalAlignment="Top" Margin="-5,2,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top">
+                    <Label Content="track number" Padding="0"/>
+                    <Label Content=" from " Padding="0" Foreground="Gray"/>
+                    <Label Content="album title" Padding="0"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
     </StackPanel>
 </Window>
