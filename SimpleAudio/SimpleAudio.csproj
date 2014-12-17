@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CoverLoader.cs" />
+    <Compile Include="EventQueue.cs" />
     <Compile Include="Hotkeys\HotKey.cs" />
     <Compile Include="Hotkeys\HotKeyAlreadyRegisteredException.cs" />
     <Compile Include="Hotkeys\HotKeyManager.cs" />
