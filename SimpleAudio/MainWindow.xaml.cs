@@ -75,6 +75,11 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.Right, ctal, () => player.Seek(PlayerSeekOrigin.CurrentForwards, 5000));
             hotkeys.AddHotKey(Key.Left, ctal, () => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
 
+            hotkeys.AddHotKey(Key.MediaPlayPause, ModifierKeys.None, () => { if (player.Status == PlayerStatus.Playing)  player.Pause(); else  player.Play(); });
+            hotkeys.AddHotKey(Key.MediaStop, ModifierKeys.None, () => player.Stop());
+            hotkeys.AddHotKey(Key.MediaNextTrack, ModifierKeys.None, () => playlist.MoveNext());
+            hotkeys.AddHotKey(Key.MediaPreviousTrack, ModifierKeys.None, () => playlist.MovePrevious());
+
             popup = new PopupWindow(player);
             hotkeys.AddHotKey(Key.Space, ctal, () => popup.ShowPopup());
 
