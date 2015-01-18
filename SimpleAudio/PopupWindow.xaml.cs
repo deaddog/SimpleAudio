@@ -33,6 +33,9 @@ namespace SimpleAudio
         private BitmapImage playImage, pauseImage, stopImage;
         private CoverLoader coverLoader;
 
+        private readonly string queueElement;
+        private Queue<Panel> queueUI;
+
         public PopupWindow()
         {
             InitializeComponent();
@@ -53,6 +56,61 @@ namespace SimpleAudio
             stopImage.EndInit();
 
             coverLoader = new CoverLoader(new System.Drawing.Size(100, 100));
+
+            queueElement = System.Windows.Markup.XamlWriter.Save(QField);
+            queueUI = new Queue<Panel>();
+        }
+
+        private Panel loadElement(Track track)
+        {
+            System.IO.StringReader stringReader = new System.IO.StringReader(queueElement);
+            System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(stringReader);
+            Panel newGrid = (Panel)System.Windows.Markup.XamlReader.Load(xmlReader);
+            newGrid.Visibility = System.Windows.Visibility.Visible;
+
+            updateElement(newGrid, track);
+
+            (this.Content as Panel).Children.Add(newGrid);
+
+            return newGrid;
+        }
+
+        private void updateElement(UIElement e, Track t)
+        {
+            if (e is Panel)
+            {
+                foreach (UIElement c in (e as Panel).Children)
+                    updateElement(c, t);
+            }
+            else if (e is Label)
+                updateElement(e as Label, t);
+            else if (e is Border)
+                setCover(e as Border, t);
+        }
+        private void updateElement(Label l, Track t)
+        {
+            switch (l.Content as string)
+            {
+                case "track title": l.Content = t.Title; return;
+                case "artist name": l.Content = t.Artist.Name; return;
+                case "album title": l.Content = t.Album.Title; return;
+                case "track number": l.Content = t.Tracknumber.HasValue ? ("#" + t.Tracknumber.Value) : ""; return;
+            }
+        }
+        private void setCover(Border border, Track track)
+        {
+            if (!(border.Child is Image))
+                return;
+
+            Image c = border.Child as Image;
+            var cover_source = track == null ? null : coverLoader[track.Album];
+
+            if (cover_source == null)
+                border.Visibility = System.Windows.Visibility.Collapsed;
+            else
+                border.Visibility = System.Windows.Visibility.Visible;
+
+            c.Source = cover_source;
         }
 
         public PopupWindow(Player<Track> player)
