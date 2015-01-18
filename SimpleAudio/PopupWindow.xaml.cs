@@ -132,6 +132,25 @@ namespace SimpleAudio
 
             this.MouseMove += PopupWindow_MouseMove;
             this.MouseLeave += PopupWindow_MouseLeave;
+
+            queue.Enqueued += (s, e) =>
+                {
+                    var el = loadElement(e.Track);
+                    queueUI.Enqueue(el);
+                    ShowPopup();
+                    this.Dispatcher.Invoke(() => { }, System.Windows.Threading.DispatcherPriority.Render);
+                    this.Top = SystemParameters.WorkArea.Height - this.Height;
+                };
+            queue.Dequeued += (s, e) =>
+                {
+                    var el = queueUI.Dequeue();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        (this.Content as Panel).Children.Remove(el);
+                        this.UpdateLayout();
+                        this.Top = SystemParameters.WorkArea.Height - this.Height;
+                    });
+                };
         }
 
         void PopupWindow_MouseMove(object sender, MouseEventArgs e)
