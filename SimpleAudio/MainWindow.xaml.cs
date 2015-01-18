@@ -32,7 +32,7 @@ namespace SimpleAudio
 
         private Library library;
         private LibraryPlaylist playlist;
-        private Queue<Track> queue;
+        private EventQueue queue;
         private QueuePlaylist<Track> queuePlaylist;
         private Player<Track> player;
 
@@ -46,7 +46,7 @@ namespace SimpleAudio
             library = new Library();
             playlist = new LibraryPlaylist(library);
 
-            queue = new Queue<Track>();
+            queue = new EventQueue();
             queuePlaylist = new QueuePlaylist<Track>(queue, playlist);
 
             player = new Player<Track>(queuePlaylist, new AudioControl<Track>(rt => rt.FilePath));
@@ -75,13 +75,13 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.PageDown, ctal, () => queuePlaylist.MoveNext());
             hotkeys.AddHotKey(Key.Right, ctal, () => player.Seek(PlayerSeekOrigin.CurrentForwards, 5000));
             hotkeys.AddHotKey(Key.Left, ctal, () => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
-
+            
             hotkeys.AddHotKey(Key.MediaPlayPause, ModifierKeys.None, () => { if (player.Status == PlayerStatus.Playing)  player.Pause(); else  player.Play(); });
             hotkeys.AddHotKey(Key.MediaStop, ModifierKeys.None, () => player.Stop());
             hotkeys.AddHotKey(Key.MediaNextTrack, ModifierKeys.None, () => playlist.MoveNext());
             hotkeys.AddHotKey(Key.MediaPreviousTrack, ModifierKeys.None, () => playlist.MovePrevious());
 
-            popup = new PopupWindow(player);
+            popup = new PopupWindow(player, queue);
             hotkeys.AddHotKey(Key.Space, ctal, () => popup.ShowPopup());
 
             textbox.Focus();

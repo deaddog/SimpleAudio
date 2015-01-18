@@ -113,7 +113,7 @@ namespace SimpleAudio
             c.Source = cover_source;
         }
 
-        public PopupWindow(Player<Track> player)
+        public PopupWindow(Player<Track> player, EventQueue queue)
             : this()
         {
             this.player = player;
