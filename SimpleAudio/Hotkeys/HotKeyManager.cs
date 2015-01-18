@@ -133,12 +133,29 @@ namespace SimpleAudio.Hotkeys
 
         private Dictionary<int, HotKey> hotkeys;
 
-        public void AddHotKey(Key key, ModifierKeys modifiers, Action action)
+        private void validateKey(Key key, ModifierKeys modifiers)
         {
             if (key == Key.None)
                 throw new ArgumentException("A key was not specified for this hotkey.", "key");
-            if (modifiers == ModifierKeys.None)
-                throw new ArgumentException("A modifier was not specified for this hotkey.", "modifiers");
+            switch (key)
+            {
+                case Key.MediaNextTrack:
+                case Key.MediaPreviousTrack:
+                case Key.MediaPlayPause:
+                case Key.MediaStop:
+                    break;
+
+                default:
+                    if (modifiers == ModifierKeys.None)
+                        throw new ArgumentException("A modifier was not specified for this hotkey.", "modifiers");
+                    break;
+            }
+        }
+
+        public void AddHotKey(Key key, ModifierKeys modifiers, Action action)
+        {
+            validateKey(key, modifiers);
+
             if (action == null)
                 throw new ArgumentNullException("An action is required when adding a HotKey.", "action");
 
@@ -153,34 +170,29 @@ namespace SimpleAudio.Hotkeys
             hk.AddAction(action);
         }
 
-        public bool RemoveHotKey(Key key, ModifierKeys modifier, Action action)
+        public bool RemoveHotKey(Key key, ModifierKeys modifiers, Action action)
         {
-            if (key == Key.None)
-                throw new ArgumentException("A key was not specified for this hotkey.", "key");
-            if (modifier == ModifierKeys.None)
-                throw new ArgumentException("A modifier was not specified for this hotkey.", "modifiers");
+            validateKey(key, modifiers);
+
             if (action == null)
                 throw new ArgumentNullException("An action is required when adding a HotKey.", "action");
 
-            HotKey hk = hotkeys.Values.Where(x => x.Key == key && x.Modifiers == modifier).FirstOrDefault();
+            HotKey hk = hotkeys.Values.Where(x => x.Key == key && x.Modifiers == modifiers).FirstOrDefault();
             if (hk != null && hk.RemoveAction(action))
             {
                 if (hk.Actions == 0)
-                    ClearHotKey(key, modifier);
+                    ClearHotKey(key, modifiers);
                 return true;
             }
             else
                 return false;
         }
 
-        public void ClearHotKey(Key key, ModifierKeys modifier)
+        public void ClearHotKey(Key key, ModifierKeys modifiers)
         {
-            if (key == Key.None)
-                throw new ArgumentException("A key was not specified for this hotkey.", "key");
-            if (modifier == ModifierKeys.None)
-                throw new ArgumentException("A modifier was not specified for this hotkey.", "modifiers");
+            validateKey(key, modifiers);
 
-            HotKey hk = hotkeys.Values.Where(x => x.Key == key && x.Modifiers == modifier).FirstOrDefault();
+            HotKey hk = hotkeys.Values.Where(x => x.Key == key && x.Modifiers == modifiers).FirstOrDefault();
             if (hk != null)
             {
                 hotkeys.Remove(hk.Id);
