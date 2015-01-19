@@ -36,6 +36,7 @@ namespace SimpleAudio
         private QueuePlaylist<Track> queuePlaylist;
         private Player<Track> player;
 
+        private bool exiting = false;
         private PopupWindow popup;
 
         public MainWindow()
@@ -66,7 +67,7 @@ namespace SimpleAudio
 
             hotkeys = new Hotkeys.HotKeyManager(this);
             hotkeys.AddHotKey(Key.J, ctal, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
-            hotkeys.AddHotKey(Key.Q, ctal, () => { popup.Close(); this.Close(); });
+            hotkeys.AddHotKey(Key.Q, ctal, () => { exiting = true; this.Close(); });
             hotkeys.AddHotKey(Key.Insert, ctal, () => player.Play());
             hotkeys.AddHotKey(Key.Home, ctal, () => player.Pause());
             hotkeys.AddHotKey(Key.End, ctal, () => player.Stop());
@@ -84,6 +85,21 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.Space, ctal, () => popup.ShowPopup());
 
             textbox.Focus();
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            if (exiting)
+            {
+                popup.Close();
+                base.OnClosing(e);
+            }
+            else
+            {
+                e.Cancel = true;
+                base.OnClosing(e);
+                this.Hide();
+            }
         }
 
         private void player_StatusChanged(object sender, EventArgs e)
