@@ -193,7 +193,7 @@ namespace SimpleAudio
                         if (shiftDown)
                         {
                             playlist.MoveToEntry(listbox.SelectedItem as Track);
-                            if (player.Status == PlayerStatus.Stopped)
+                            if (player.Status == PlayerStatus.Stopped || player.Status == PlayerStatus.Paused)
                                 player.Play();
                         }
                         else
