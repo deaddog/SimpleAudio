@@ -195,6 +195,7 @@ namespace SimpleAudio
                             playlist.MoveToEntry(listbox.SelectedItem as Track);
                             if (player.Status == PlayerStatus.Stopped || player.Status == PlayerStatus.Paused)
                                 player.Play();
+                            popup.ShowPopup();
                         }
                         else
                             queue.Enqueue(listbox.SelectedItem as Track);
