@@ -113,7 +113,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DeadDog.Audio\DeadDog.Audio.csproj">
+    <ProjectReference Include="..\DeadDog.Audio\Source\DeadDog.Audio.csproj">
       <Project>{a393fd81-a89c-4761-af87-2e5de2b95b61}</Project>
       <Name>DeadDog.Audio</Name>
     </ProjectReference>
