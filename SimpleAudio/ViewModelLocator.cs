@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using DeadDog.Audio;
+using DeadDog.Audio.Libraries;
 using SimpleAudio.ViewModels;
 
 namespace SimpleAudio
@@ -20,6 +22,9 @@ namespace SimpleAudio
 
             builder.RegisterType<StatusViewModel>().SingleInstance();
             builder.RegisterType<SearchViewModel>().SingleInstance();
+
+            builder.RegisterType<Library>().SingleInstance();
+            builder.RegisterType<LibraryPlaylist>().As<IPlaylist<Track>>().SingleInstance();
 
             return builder.Build();
         }
