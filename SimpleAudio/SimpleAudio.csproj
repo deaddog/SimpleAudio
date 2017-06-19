@@ -70,6 +70,9 @@
     <Compile Include="ScannerBackgroundWorker.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TaskbarHider.cs" />
+    <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModels\StatusViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
