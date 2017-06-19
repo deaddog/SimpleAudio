@@ -1,5 +1,8 @@
-﻿namespace SimpleAudio.ViewModels
+﻿using PropertyChanged;
+
+namespace SimpleAudio.ViewModels
 {
+    [AddINotifyPropertyChangedInterface]
     public class SearchViewModel
     {
     }
