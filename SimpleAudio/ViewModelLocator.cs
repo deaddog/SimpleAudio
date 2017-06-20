@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using DeadDog.Audio;
 using DeadDog.Audio.Libraries;
+using DeadDog.Audio.Playback;
 using SimpleAudio.ViewModels;
 
 namespace SimpleAudio
@@ -22,9 +23,13 @@ namespace SimpleAudio
 
             builder.RegisterType<StatusViewModel>().SingleInstance();
             builder.RegisterType<SearchViewModel>().SingleInstance();
+            builder.RegisterType<PlayerViewModel>().SingleInstance();
 
             builder.RegisterType<Library>().SingleInstance();
-            builder.RegisterType<LibraryPlaylist>().As<IPlaylist<Track>>().SingleInstance();
+            builder.RegisterType<LibraryPlaylist>().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
+
+            builder.Register(_ => new AudioControl<Track>(t => t.FilePath)).As<IPlayback<Track>>().SingleInstance();
+            builder.RegisterType<Player<Track>>().SingleInstance();
 
             return builder.Build();
         }

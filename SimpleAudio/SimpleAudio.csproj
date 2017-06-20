@@ -80,6 +80,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="TaskbarHider.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Page Include="MainWindow.xaml">
