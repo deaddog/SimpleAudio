@@ -11,22 +11,34 @@
         DataContext="{Binding Path=StatusViewModel, Source={StaticResource ViewModelLocator}}">
     <Grid>
         <Rectangle Fill="#FF2E6292" Height="37" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
-        <Rectangle x:Name="progress" Fill="#FF84BCF0" Height="2" VerticalAlignment="Top" Margin="-1,34,-1,0" StrokeThickness="0"/>
-        <Image x:Name="status_icon" Height="11" Margin="10,13,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="11" Source="pack://siteoforigin:,,,/Resources/stop.png"/>
-        <Label x:Name="status" Content="Stopped" HorizontalAlignment="Left" Margin="21,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Grid Margin="-1,34,-1,0" Height="2" VerticalAlignment="Top">
+            <Rectangle Fill="#FF84BCF0" HorizontalAlignment="Left" StrokeThickness="0">
+                <Rectangle.Width>
+                    <MultiBinding Converter="{StaticResource RelativeWidthConverter}">
+                        <Binding Path="Player.Progress"/>
+                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType={x:Type Grid }}"/>
+                    </MultiBinding>
+                </Rectangle.Width>
+            </Rectangle>
+        </Grid>
+        <Image Height="11" Margin="10,13,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="11" Source="{Binding Player.Status, Converter={StaticResource StatusIconConverter}}"/>
+        <TextBlock Text="{Binding Player.Status}" HorizontalAlignment="Left" Margin="26,7,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         <StackPanel HorizontalAlignment="Right" Margin="0,2,5,0" VerticalAlignment="Top" Orientation="Horizontal">
-            <Label x:Name="time_position" Content="time" Foreground="White" FontSize="16"/>
-            <Label Content="/" Foreground="White" Margin="-8,-4,-8,0" FontSize="20"/>
-            <Label x:Name="time_length" Content="length" Foreground="#FFA8CDF0" Margin="0,3,0,0" FontSize="13"/>
+            <TextBlock Text="{Binding Player.Position, StringFormat=%m\\:ss, Mode=OneWay}" Margin="0 5 2 0" Foreground="White" FontSize="16"/>
+            <TextBlock Text="/" Foreground="White" Margin="0 1 2 0" FontSize="20"/>
+            <TextBlock Text="{Binding Player.Length, StringFormat=%m\\:ss, Mode=OneWay}" Foreground="#FFA8CDF0" Margin="0,8,5,0" FontSize="13"/>
         </StackPanel>
         <StackPanel Height="100" Orientation="Horizontal" Margin="5,41,5,5">
             <Border x:Name="cover_border" BorderThickness="1" BorderBrush="Black">
                 <Image x:Name="cover" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Stretch="Fill"/>
             </Border>
             <StackPanel Height="100">
-                <Label x:Name="title" Content="track title" HorizontalAlignment="Left" Margin="0,16,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
-                <Label x:Name="artist" Content="artist name" HorizontalAlignment="Left" Margin="4,-11,0,0" VerticalAlignment="Top"/>
-                <Label x:Name="album" Content="album title #track-number" HorizontalAlignment="Left" Margin="4,-12,0,0" VerticalAlignment="Top"/>
+                <TextBlock Text="{Binding Player.CurrentTrack.Title, Mode=OneWay}" HorizontalAlignment="Left" Margin="5,21,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+                <TextBlock Text="{Binding Player.CurrentTrack.Artist.Name, Mode=OneWay}" HorizontalAlignment="Left" Margin="9,-1,0,0" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="9,-2,0,0" VerticalAlignment="Top">
+                    <Run Text="{Binding Player.CurrentTrack.Album.Title, Mode=OneWay}"/>
+                    <Run Text="{Binding Player.CurrentTrack.Tracknumber, Mode=OneWay, StringFormat=#{0:0}}"/>
+                </TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -30,27 +30,11 @@ namespace SimpleAudio
         private const double WAIT_SEC = 3;
         private const double FADE_SEC = 3;
 
-        private BitmapImage playImage, pauseImage, stopImage;
         private CoverLoader coverLoader;
 
         public PopupWindow()
         {
             InitializeComponent();
-
-            playImage = new BitmapImage();
-            playImage.BeginInit();
-            playImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/play.png");
-            playImage.EndInit();
-
-            pauseImage = new BitmapImage();
-            pauseImage.BeginInit();
-            pauseImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/pause.png");
-            pauseImage.EndInit();
-
-            stopImage = new BitmapImage();
-            stopImage.BeginInit();
-            stopImage.UriSource = new Uri("pack://siteoforigin:,,,/Resources/stop.png");
-            stopImage.EndInit();
 
             coverLoader = new CoverLoader(new System.Drawing.Size(100, 100));
         }
@@ -62,8 +46,6 @@ namespace SimpleAudio
             setTrack(player.Track);
 
             this.player.TrackChanged += player_TrackChanged;
-            this.player.StatusChanged += player_StatusChanged;
-            this.player.PositionChanged += player_PositionChanged;
 
             TaskbarHider.HideMe(this);
             this.Loaded += PopupWindow_Loaded;
@@ -88,14 +70,6 @@ namespace SimpleAudio
         }
 
         // Event handlers - named so that they can be removed when closing
-        void player_PositionChanged(object sender, PositionChangedEventArgs e)
-        {
-            this.Dispatcher.Invoke(player_PositionChanged);
-        }
-        void player_StatusChanged(object sender, EventArgs e)
-        {
-            this.Dispatcher.Invoke(player_StatusChanged);
-        }
         void player_TrackChanged(object sender, EventArgs e)
         {
             this.Dispatcher.Invoke(() => setTrack(player.Track));
@@ -106,8 +80,6 @@ namespace SimpleAudio
             alphaTimer.Stop();
 
             this.player.TrackChanged -= player_TrackChanged;
-            this.player.StatusChanged -= player_StatusChanged;
-            this.player.PositionChanged -= player_PositionChanged;
 
             base.OnClosing(e);
         }
@@ -163,22 +135,6 @@ namespace SimpleAudio
 
         private void setTrack(Track track)
         {
-            if (track == null)
-            {
-                title.Content = "";
-                artist.Content = "";
-                album.Content = "";
-                time_length.Content = "0:00";
-                time_position.Content = "0:00";
-            }
-            else
-            {
-                title.Content = track.Title;
-                artist.Content = track.Artist.Name;
-                album.Content = track.Album.Title + " #" + track.Tracknumber;
-                time_length.Content = ToTime(player.Length);
-            }
-
             var cover_source = track == null ? null : coverLoader[track.Album];
 
             if (cover_source == null)
@@ -187,51 +143,6 @@ namespace SimpleAudio
                 cover_border.Visibility = System.Windows.Visibility.Visible;
 
             cover.Source = cover_source;
-        }
-
-        private void player_PositionChanged()
-        {
-            if (!this.IsVisible)
-                return;
-
-            var p = 1 - player.PercentPlayed;
-
-            var w = this.ActualWidth * p;
-            Thickness th = progress.Margin;
-            th.Right = w;
-
-            progress.Margin = th;
-            time_position.Content = ToTime(player.Position);
-        }
-
-        private string ToTime(uint milliseconds)
-        {
-            milliseconds /= 1000;
-            var s = milliseconds % 60;
-            milliseconds -= s;
-            milliseconds /= 60;
-            var m = milliseconds;
-            return string.Format("{0:0}:{1:00}", m, s);
-        }
-
-        private void player_StatusChanged()
-        {
-            switch (player.Status)
-            {
-                case PlayerStatus.Playing:
-                    status.Content = "Playing";
-                    status_icon.Source = playImage;
-                    break;
-                case PlayerStatus.Paused:
-                    status.Content = "Paused";
-                    status_icon.Source = pauseImage;
-                    break;
-                case PlayerStatus.Stopped:
-                case PlayerStatus.NoFileOpen:
-                    status.Content = "Stopped";
-                    status_icon.Source = stopImage;
-                    break;
-            }
         }
 
         private void ImagePanel_Drop(object sender, DragEventArgs e)
