@@ -2,10 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SimpleAudio"
+             xmlns:convert="clr-namespace:SimpleAudio.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="ViewModelLocator" />
+            <convert:RelativeWidthConverter x:Key="RelativeWidthConverter" />
+            <convert:StatusIconConverter x:Key="StatusIconConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
