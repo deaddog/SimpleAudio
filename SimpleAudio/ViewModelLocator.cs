@@ -22,6 +22,7 @@ namespace SimpleAudio
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<StatusViewModel>().SingleInstance();
             builder.RegisterType<SearchViewModel>().SingleInstance();
             builder.RegisterType<PlayerViewModel>().SingleInstance();
@@ -35,18 +36,18 @@ namespace SimpleAudio
             return builder.Build();
         }
 
-        public SearchViewModel SearchViewModel
+        public MainViewModel MainViewModel
         {
-            get { return IsDesignMode ? CreateDesignSearchViewModel() : Container.Resolve<SearchViewModel>(); }
+            get { return IsDesignMode ? CreateDesignMainViewModel() : Container.Resolve<MainViewModel>(); }
         }
         public StatusViewModel StatusViewModel
         {
             get { return IsDesignMode ? CreateDesignStatusViewModel() : Container.Resolve<StatusViewModel>(); }
         }
 
-        private SearchViewModel CreateDesignSearchViewModel()
+        private MainViewModel CreateDesignMainViewModel()
         {
-            var vm = new SearchViewModel();
+            var vm = new MainViewModel(new SearchViewModel());
 
             return vm;
         }

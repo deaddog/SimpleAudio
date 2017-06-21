@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" ResizeMode="CanResizeWithGrip" 
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1" Topmost="True" ShowInTaskbar="False"
-        DataContext="{Binding Path=SearchViewModel, Source={StaticResource ViewModelLocator}}">
+        DataContext="{Binding Path=MainViewModel, Source={StaticResource ViewModelLocator}}">
     <Grid>
         <Rectangle Fill="#FF2E6292" Height="60" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
         <ListBox x:Name="listbox" Margin="0,59,0,20" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemTemplate="{DynamicResource TwoLineTracks}">
