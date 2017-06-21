@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command.cs" />
     <Compile Include="Converters\RelativeWidthConverter.cs" />
     <Compile Include="Converters\StatusIconConverter.cs" />
     <Compile Include="CoverLoader.cs" />
