@@ -9,7 +9,8 @@
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1" Topmost="True" ShowInTaskbar="False"
         DataContext="{Binding Path=MainViewModel, Source={StaticResource ViewModelLocator}}">
     <Grid>
-        <ctrl:HotKeyControl/>
+        <ctrl:HotKeyControl PlayCommand="{Binding PlayCommand}" PauseCommand="{Binding PauseCommand}" PlayPauseCommand="{Binding PlayPauseCommand}" StopCommand="{Binding StopCommand}"
+                            PreviousCommand="{Binding PreviousCommand}" NextCommand="{Binding NextCommand}" SeekForwardsCommand="{Binding SeekForwardsCommand}" SeekBackwardsCommand="{Binding SeekBackwardsCommand}"/>
         <Rectangle Fill="#FF2E6292" Height="60" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
         <ListBox x:Name="listbox" Margin="0,59,0,20" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemTemplate="{DynamicResource TwoLineTracks}">
             <ListBox.Resources>
