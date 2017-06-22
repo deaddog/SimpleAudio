@@ -70,9 +70,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
+    <Compile Include="Controls\HotKeyControl.cs" />
     <Compile Include="Converters\RelativeWidthConverter.cs" />
     <Compile Include="Converters\StatusIconConverter.cs" />
     <Compile Include="CoverLoader.cs" />
+    <Compile Include="HotKeyExtension.cs" />
     <Compile Include="Hotkeys\HotKey.cs" />
     <Compile Include="Hotkeys\HotKeyAlreadyRegisteredException.cs" />
     <Compile Include="Hotkeys\HotKeyManager.cs" />
