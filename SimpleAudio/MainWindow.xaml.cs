@@ -18,6 +18,7 @@ using DeadDog.Audio.Scan;
 using DeadDog.Audio.Libraries;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.IO;
+using DeadDog.Audio.Playlist;
 
 namespace SimpleAudio
 {
@@ -32,7 +33,6 @@ namespace SimpleAudio
 
         private Library library;
         private LibraryPlaylist playlist;
-        private Queue<Track> queue;
         private QueuePlaylist<Track> queuePlaylist;
         private Player<Track> player;
 
@@ -46,10 +46,9 @@ namespace SimpleAudio
             library = new Library();
             playlist = new LibraryPlaylist(library);
 
-            queue = new Queue<Track>();
-            queuePlaylist = new QueuePlaylist<Track>(queue, playlist);
+            queuePlaylist = new QueuePlaylist<Track>(playlist);
 
-            player = new Player<Track>(queuePlaylist, new AudioControl<Track>(rt => rt.FilePath));
+            player = new Player<Track>(queuePlaylist, new FilePlayback<Track>(new AudioControl(), (rt => rt.FilePath)));
             player.StatusChanged += player_StatusChanged;
 
             foreach (var path in App.CurrentApp.Settings.Mediapaths)
@@ -185,7 +184,7 @@ namespace SimpleAudio
                                 player.Play();
                         }
                         else
-                            queue.Enqueue(listbox.SelectedItem as Track);
+                            queuePlaylist.Enqueue(listbox.SelectedItem as Track);
                     break;
 
                 case Key.LeftShift:

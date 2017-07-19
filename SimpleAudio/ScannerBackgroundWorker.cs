@@ -9,7 +9,7 @@ namespace SimpleAudio
 {
     public class ScannerBackgroundWorker
     {
-        private static readonly DeadDog.Audio.Parsing.IDataParser parser = new DeadDog.Audio.MediaParser();
+        private static readonly DeadDog.Audio.Parsing.IMediaParser parser = DeadDog.Audio.Parsing.MediaParser.GetDefault(true);
         private static readonly MD5 md5 = MD5.Create();
 
         private static string getHash(string text)

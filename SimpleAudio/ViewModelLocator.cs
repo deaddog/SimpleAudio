@@ -4,6 +4,7 @@ using DeadDog.Audio;
 using DeadDog.Audio.Libraries;
 using DeadDog.Audio.Playback;
 using SimpleAudio.ViewModels;
+using DeadDog.Audio.Playlist;
 
 namespace SimpleAudio
 {
@@ -30,7 +31,7 @@ namespace SimpleAudio
             builder.RegisterType<Library>().SingleInstance();
             builder.RegisterType<LibraryPlaylist>().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
 
-            builder.Register(_ => new AudioControl<Track>(t => t.FilePath)).As<IPlayback<Track>>().SingleInstance();
+            builder.Register(_ => new FilePlayback<Track>(new AudioControl(), x => x.FilePath)).As<IPlayback<Track>>().SingleInstance();
             builder.RegisterType<Player<Track>>().SingleInstance();
 
             return builder.Build();
@@ -76,9 +77,6 @@ namespace SimpleAudio
             public uint Position => (1 * 60 + 14) * 1000;
             public uint Length => (5 * 60 + 36) * 1000;
 
-            public int LeftVolume { get => 0; set { } }
-            public int RightVolume { get => 0; set { } }
-
             public event EventHandler StatusChanged;
             public event PositionChangedEventHandler PositionChanged;
 
@@ -94,6 +92,15 @@ namespace SimpleAudio
 
             public void Dispose()
             {
+            }
+
+            public void GetVolume(out double left, out double right)
+            {
+                throw new NotImplementedException();
+            }
+            public void SetVolume(double left, double right)
+            {
+                throw new NotImplementedException();
             }
 
             public bool Open(Track element)
