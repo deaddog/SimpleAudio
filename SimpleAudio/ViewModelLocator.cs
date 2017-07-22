@@ -29,7 +29,8 @@ namespace SimpleAudio
             builder.RegisterType<PlayerViewModel>().SingleInstance();
 
             builder.RegisterType<Library>().SingleInstance();
-            builder.RegisterType<LibraryPlaylist>().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
+            builder.RegisterType<LibraryPlaylist>().Named<IPlaylist<Track>>("playlist").SingleInstance();
+            builder.Register(_ => new QueuePlaylist<Track>(_.ResolveNamed<IPlaylist<Track>>("playlist"))).AsSelf().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
 
             builder.Register(_ => new FilePlayback<Track>(new AudioControl(), x => x.FilePath)).As<IPlayback<Track>>().SingleInstance();
             builder.RegisterType<Player<Track>>().SingleInstance();
