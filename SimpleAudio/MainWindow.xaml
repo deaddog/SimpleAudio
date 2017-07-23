@@ -4,11 +4,13 @@
         xmlns:d ="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctrl="clr-namespace:SimpleAudio.Controls"
+        xmlns:notify="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" ResizeMode="CanResizeWithGrip" 
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1" Topmost="True" ShowInTaskbar="False"
         DataContext="{Binding Path=MainViewModel, Source={StaticResource ViewModelLocator}}">
     <Grid>
+        <notify:TaskbarIcon IconSource="{Binding Status.Player.Status, Converter={StaticResource StatusTaskbarIconConverter}, Mode=OneWay}"/>
         <ctrl:HotKeyControl PlayCommand="{Binding PlayCommand}" PauseCommand="{Binding PauseCommand}" PlayPauseCommand="{Binding PlayPauseCommand}" StopCommand="{Binding StopCommand}"
                             PreviousCommand="{Binding PreviousCommand}" NextCommand="{Binding NextCommand}" SeekForwardsCommand="{Binding SeekForwardsCommand}" SeekBackwardsCommand="{Binding SeekBackwardsCommand}"/>
         <Rectangle Fill="#FF2E6292" Height="60" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>

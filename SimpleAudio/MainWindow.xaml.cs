@@ -29,7 +29,6 @@ namespace SimpleAudio
     {
         private ScannerBackgroundWorker scanner;
         private Hotkeys.HotKeyManager hotkeys;
-        private TaskbarIcon icon;
 
         private Library library;
         private LibraryPlaylist playlist;
@@ -49,7 +48,6 @@ namespace SimpleAudio
             queuePlaylist = new QueuePlaylist<Track>(playlist);
 
             player = new Player<Track>(queuePlaylist, new FilePlayback<Track>(new AudioControl(), (rt => rt.FilePath)));
-            player.StatusChanged += player_StatusChanged;
 
             foreach (var path in App.CurrentApp.Settings.Mediapaths)
             {
@@ -58,9 +56,6 @@ namespace SimpleAudio
                 scanner.FileParsed += scanner_FileParsed;
                 scanner.RunAync();
             }
-
-            icon = new TaskbarIcon();
-            icon.Icon = Properties.Resources.headset;
 
             var ctal = ModifierKeys.Control | ModifierKeys.Alt;
 
@@ -86,26 +81,6 @@ namespace SimpleAudio
                 e.Cancel = true;
                 base.OnClosing(e);
                 this.Hide();
-            }
-        }
-
-        private void player_StatusChanged(object sender, EventArgs e)
-        {
-            switch (player.Status)
-            {
-                case PlayerStatus.Playing:
-                    icon.Icon = Properties.Resources.headset_play;
-                    break;
-                case PlayerStatus.Paused:
-                    icon.Icon = Properties.Resources.headset_pause;
-                    break;
-                case PlayerStatus.Stopped:
-                    icon.Icon = Properties.Resources.headset_stop;
-                    break;
-                case PlayerStatus.NoFileOpen:
-                default:
-                    icon.Icon = Properties.Resources.headset;
-                    break;
             }
         }
 

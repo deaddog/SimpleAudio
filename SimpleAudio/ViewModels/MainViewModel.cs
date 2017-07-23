@@ -1,6 +1,7 @@
 ﻿using DeadDog.Audio;
 using DeadDog.Audio.Libraries;
 using DeadDog.Audio.Playback;
+using DeadDog.Audio.Playlist;
 using PropertyChanged;
 using System.Windows.Input;
 
@@ -13,6 +14,7 @@ namespace SimpleAudio.ViewModels
         private readonly IPlaylist<Track> _playlist;
 
         public SearchViewModel Searching { get; }
+        public StatusViewModel Status { get; }
 
         public ICommand PlayCommand { get; set; }
         public ICommand PauseCommand { get; set; }
@@ -25,11 +27,12 @@ namespace SimpleAudio.ViewModels
         public ICommand SeekBackwardsCommand { get; set; }
         public ICommand SeekForwardsCommand { get; set; }
 
-        public MainViewModel(SearchViewModel searching, Player<Track> player, IPlaylist<Track> playlist)
+        public MainViewModel(SearchViewModel searching, StatusViewModel status, Player<Track> player, IPlaylist<Track> playlist)
         {
             _player = player;
             _playlist = playlist;
             Searching = searching;
+            Status = status;
 
             PlayCommand = new Command(() => _player.Play());
             PauseCommand = new Command(() => _player.Pause());
