@@ -9,6 +9,7 @@
             <local:ViewModelLocator x:Key="ViewModelLocator" />
             <convert:RelativeWidthConverter x:Key="RelativeWidthConverter" />
             <convert:StatusIconConverter x:Key="StatusIconConverter" />
+            <convert:StatusTaskbarIconConverter x:Key="StatusTaskbarIconConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

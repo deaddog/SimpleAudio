@@ -73,6 +73,7 @@
     <Compile Include="Controls\HotKeyControl.cs" />
     <Compile Include="Converters\RelativeWidthConverter.cs" />
     <Compile Include="Converters\StatusIconConverter.cs" />
+    <Compile Include="Converters\StatusTaskbarIconConverter.cs" />
     <Compile Include="CoverLoader.cs" />
     <Compile Include="HotKeyExtension.cs" />
     <Compile Include="Hotkeys\HotKey.cs" />
@@ -145,16 +146,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset.ico" />
+    <Resource Include="Resources\headset.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset_pause.ico" />
+    <Resource Include="Resources\headset_pause.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset_play.ico" />
+    <Resource Include="Resources\headset_play.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset_stop.ico" />
+    <Resource Include="Resources\headset_stop.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\audio.ico" />
