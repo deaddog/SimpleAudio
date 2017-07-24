@@ -136,6 +136,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DeadDog.Audio\DeadDog.Audio.AudioDB\DeadDog.Audio.AudioDB.csproj">
+      <Project>{f57a9126-c03a-499c-b1fb-5336fbce4415}</Project>
+      <Name>DeadDog.Audio.AudioDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DeadDog.Audio\DeadDog.Audio\DeadDog.Audio.csproj">
       <Project>{a393fd81-a89c-4761-af87-2e5de2b95b61}</Project>
       <Name>DeadDog.Audio</Name>
