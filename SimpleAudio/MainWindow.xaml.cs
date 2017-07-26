@@ -63,7 +63,7 @@ namespace SimpleAudio
             hotkeys.AddHotKey(Key.J, ctal, () => { this.Show(); textbox.Focus(); textbox.Text = ""; });
             hotkeys.AddHotKey(Key.Q, ctal, () => { exiting = true; this.Close(); });
 
-            popup = new PopupWindow(player);
+            popup = new PopupWindow();
             hotkeys.AddHotKey(Key.Space, ctal, () => popup.ShowPopup());
 
             textbox.Focus();
