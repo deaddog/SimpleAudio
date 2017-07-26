@@ -70,6 +70,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
+    <Compile Include="Controls\AlbumCoverImage.xaml.cs">
+      <DependentUpon>AlbumCoverImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HotKeyControl.cs" />
     <Compile Include="Converters\RelativeWidthConverter.cs" />
     <Compile Include="Converters\StatusIconConverter.cs" />
@@ -90,6 +93,10 @@
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Page Include="Controls\AlbumCoverImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
