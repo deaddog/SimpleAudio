@@ -1,6 +1,7 @@
 ﻿using DeadDog.Audio.Playback;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -8,10 +9,15 @@ namespace SimpleAudio.Converters
 {
     public class StatusTaskbarIconConverter : IValueConverter
     {
+        private readonly DependencyObject _designObject = new DependencyObject();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is PlayerStatus status))
                 throw new ArgumentException($"Only values of type {nameof(PlayerStatus)} can be converted.");
+
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(_designObject))
+                return null;
 
             switch (status)
             {

@@ -21,6 +21,9 @@ namespace SimpleAudio.Controls
 
         public HotKeyControl()
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+                return;
+
             _hotkeys = new HotKeyManager(App.Current.MainWindow);
 
             var CtrlAlt = ModifierKeys.Control | ModifierKeys.Alt;

@@ -79,7 +79,7 @@ namespace SimpleAudio.Controls
             var filepath = GetCoverFilepath(album);
             if (File.Exists(filepath))
                 ChangeImage(new Uri(filepath));
-            else
+            else if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
                 Task.Run(async () =>
                 {
                     var albums = (await _audioDb.SearchForAlbum(album))?.Albums;
@@ -119,7 +119,7 @@ namespace SimpleAudio.Controls
             get => GetValue(AlbumProperty) as Album;
             set => SetValue(AlbumProperty, value);
         }
-        
+
         private void HandleDragDrop(object sender, DragEventArgs e)
         {
             string file = DownloadDragData(e);
