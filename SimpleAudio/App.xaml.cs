@@ -10,22 +10,18 @@ namespace SimpleAudio
     /// </summary>
     public partial class App : Application
     {
-        private static readonly string applicationDataPath;
-        public static string ApplicationDataPath
-        {
-            get { return applicationDataPath; }
-        }
+        public static string ApplicationDataPath { get; }
+        private static string SettingsPath => Path.Combine(ApplicationDataPath, "settings.xml");
 
         static App()
         {
-            var roamingPath = Environment.GetFolderPath(
-                Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
+            var roamingPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
 
             roamingPath = Path.Combine(roamingPath, "DeadDog", "SimpleAudio");
-            ensurePath(roamingPath);
-            applicationDataPath = roamingPath;
+            EnsurePath(roamingPath);
+            ApplicationDataPath = roamingPath;
         }
-        private static void ensurePath(string path)
+        private static void EnsurePath(string path)
         {
             string[] levels = path.Split(Path.DirectorySeparatorChar);
             var drive = new DriveInfo(levels[0]);
@@ -51,7 +47,6 @@ namespace SimpleAudio
             get { return SimpleAudio.App.Current as App; }
         }
 
-        private string settingsPath;
         private XDocument settingsDoc;
         private Settings settings;
         public Settings Settings
@@ -61,8 +56,7 @@ namespace SimpleAudio
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            this.settingsPath = Path.Combine(applicationDataPath, "settings.xml");
-            this.settingsDoc = File.Exists(settingsPath) ? XDocument.Load(settingsPath) : new XDocument();
+            this.settingsDoc = File.Exists(SettingsPath) ? XDocument.Load(SettingsPath) : new XDocument();
 
             XElement settingsElement = settingsDoc.Element("settings");
             if (settingsElement == null)
@@ -74,7 +68,7 @@ namespace SimpleAudio
         }
         protected override void OnExit(ExitEventArgs e)
         {
-            this.settingsDoc.Save(settingsPath);
+            this.settingsDoc.Save(SettingsPath);
             base.OnExit(e);
         }
     }
