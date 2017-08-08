@@ -99,7 +99,6 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
-    <Compile Include="ViewModels\SearchViewModel.cs" />
     <Page Include="Controls\AlbumCoverImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

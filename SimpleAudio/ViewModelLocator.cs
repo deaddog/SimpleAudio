@@ -25,7 +25,6 @@ namespace SimpleAudio
 
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<StatusViewModel>().SingleInstance();
-            builder.RegisterType<SearchViewModel>().SingleInstance();
             builder.RegisterType<PlayerViewModel>().SingleInstance();
 
             builder.RegisterType<Library>().SingleInstance();
@@ -49,7 +48,7 @@ namespace SimpleAudio
 
         private MainViewModel CreateDesignMainViewModel()
         {
-            var vm = new MainViewModel(new SearchViewModel(), CreateDesignStatusViewModel(), null, null);
+            var vm = new MainViewModel(CreateDesignStatusViewModel(), null, null);
 
             return vm;
         }

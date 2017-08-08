@@ -13,7 +13,6 @@ namespace SimpleAudio.ViewModels
         private readonly Player<Track> _player;
         private readonly IPlaylist<Track> _playlist;
 
-        public SearchViewModel Searching { get; }
         public StatusViewModel Status { get; }
 
         public ICommand PlayCommand { get; set; }
@@ -27,11 +26,11 @@ namespace SimpleAudio.ViewModels
         public ICommand SeekBackwardsCommand { get; set; }
         public ICommand SeekForwardsCommand { get; set; }
 
-        public MainViewModel(SearchViewModel searching, StatusViewModel status, Player<Track> player, IPlaylist<Track> playlist)
+        public MainViewModel(StatusViewModel status, Player<Track> player, IPlaylist<Track> playlist)
         {
             _player = player;
             _playlist = playlist;
-            Searching = searching;
+
             Status = status;
 
             PlayCommand = new Command(() => _player.Play());
