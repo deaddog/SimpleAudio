@@ -81,6 +81,9 @@
       <DependentUpon>AlbumCoverImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\HotKeyControl.cs" />
+    <Compile Include="Controls\TrackSearchControl.xaml.cs">
+      <DependentUpon>TrackSearchControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\RelativeWidthConverter.cs" />
     <Compile Include="Converters\StatusIconConverter.cs" />
     <Compile Include="Converters\StatusTaskbarIconConverter.cs" />
@@ -100,6 +103,10 @@
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
     <Page Include="Controls\AlbumCoverImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TrackSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

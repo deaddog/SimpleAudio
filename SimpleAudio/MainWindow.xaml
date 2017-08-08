@@ -13,25 +13,6 @@
         <notify:TaskbarIcon IconSource="{Binding Status.Player.Status, Converter={StaticResource StatusTaskbarIconConverter}, Mode=OneWay}"/>
         <ctrl:HotKeyControl PlayCommand="{Binding PlayCommand}" PauseCommand="{Binding PauseCommand}" PlayPauseCommand="{Binding PlayPauseCommand}" StopCommand="{Binding StopCommand}"
                             PreviousCommand="{Binding PreviousCommand}" NextCommand="{Binding NextCommand}" SeekForwardsCommand="{Binding SeekForwardsCommand}" SeekBackwardsCommand="{Binding SeekBackwardsCommand}"/>
-        <Rectangle Fill="#FF2E6292" Height="60" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
-        <ListBox x:Name="listbox" Margin="0,59,0,20" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemTemplate="{DynamicResource TwoLineTracks}">
-            <ListBox.Resources>
-                <DataTemplate x:Key="TwoLineTracks">
-                    <Grid Height="34" Width="534">
-                        <StackPanel HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal" Margin="0,18,0,0">
-                            <Label Content="{Binding Artist.Name, FallbackValue=[Artist]}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
-                            <Label Content="{Binding Album.Title, FallbackValue=[Album]}" ContentStringFormat=" - {0}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
-                            <Label Content="{Binding Tracknumber, FallbackValue=[TracNumber]}" ContentStringFormat=" #{0}" HorizontalAlignment="Left" Height="26" Margin="0" FontSize="9" Foreground="#99000000" Padding="0"/>
-                        </StackPanel>
-                        <Label Content="{Binding Title, FallbackValue=[Title]}" HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top"/>
-                    </Grid>
-                </DataTemplate>
-                <!-- Background of selected item when not focussed -->
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{x:Static SystemColors.HighlightColor}" />
-            </ListBox.Resources>
-        </ListBox>
-        <Label Content="Search For Tracks" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBox x:Name="textbox" Margin="10,30,10,0" TextWrapping="Wrap" FontSize="11" Height="21" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
-        <Label Content="Use Enter to enqueue a track, and Shift+Enter to jump to a track" FontSize="10" Foreground="#B2000000" HorizontalAlignment="Left" Width="293" Height="23" VerticalAlignment="Bottom"/>
+        <ctrl:TrackSearchControl x:Name="searchControl" QueueTrackCommand="{Binding QueueTrack}" PlayTrackCommand="{Binding PlayTrack}" Tracks="{Binding Tracks}"/>
     </Grid>
 </Window>
