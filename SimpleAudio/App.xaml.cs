@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Windows;
-using System.Xml.Linq;
 
 namespace SimpleAudio
 {
@@ -11,7 +11,7 @@ namespace SimpleAudio
     public partial class App : Application
     {
         public static string ApplicationDataPath { get; }
-        private static string SettingsPath => Path.Combine(ApplicationDataPath, "settings.xml");
+        private static string SettingsPath => Path.Combine(ApplicationDataPath, "settings.json");
 
         static App()
         {
@@ -47,28 +47,18 @@ namespace SimpleAudio
             get { return SimpleAudio.App.Current as App; }
         }
 
-        private XDocument settingsDoc;
-        private Settings settings;
-        public Settings Settings
-        {
-            get { return settings; }
-        }
+        public Settings Settings { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            this.settingsDoc = File.Exists(SettingsPath) ? XDocument.Load(SettingsPath) : new XDocument();
-
-            XElement settingsElement = settingsDoc.Element("settings");
-            if (settingsElement == null)
-                settingsDoc.Add(settingsElement = new XElement("settings"));
-
-            this.settings = new Settings(settingsElement);
+            Settings = File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0]);
 
             base.OnStartup(e);
         }
         protected override void OnExit(ExitEventArgs e)
         {
-            this.settingsDoc.Save(SettingsPath);
+            File.WriteAllText(SettingsPath, JsonConvert.SerializeObject(Settings));
+
             base.OnExit(e);
         }
     }
