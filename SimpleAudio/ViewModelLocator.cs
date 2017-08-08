@@ -48,7 +48,9 @@ namespace SimpleAudio
 
         private MainViewModel CreateDesignMainViewModel()
         {
-            var vm = new MainViewModel(CreateDesignStatusViewModel(), null, null);
+            var library = new Library();
+
+            var vm = new MainViewModel(CreateDesignStatusViewModel(), library, null, null, null);
 
             return vm;
         }

@@ -10,8 +10,10 @@ namespace SimpleAudio.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class MainViewModel
     {
+        private readonly Library _library;
         private readonly Player<Track> _player;
         private readonly IPlaylist<Track> _playlist;
+        private readonly QueuePlaylist<Track> _queue;
 
         public StatusViewModel Status { get; }
 
@@ -26,10 +28,17 @@ namespace SimpleAudio.ViewModels
         public ICommand SeekBackwardsCommand { get; set; }
         public ICommand SeekForwardsCommand { get; set; }
 
-        public MainViewModel(StatusViewModel status, Player<Track> player, IPlaylist<Track> playlist)
+        public LibraryCollection<Track> Tracks { get; }
+
+        public ICommand PlayTrack { get; }
+        public ICommand QueueTrack { get; }
+
+        public MainViewModel(StatusViewModel status, Library library, Player<Track> player, IPlaylist<Track> playlist, QueuePlaylist<Track> queue)
         {
+            _library = library;
             _player = player;
             _playlist = playlist;
+            _queue = queue;
 
             Status = status;
 
@@ -43,6 +52,16 @@ namespace SimpleAudio.ViewModels
 
             SeekBackwardsCommand = new Command(() => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
             SeekForwardsCommand = new Command(() => player.Seek(PlayerSeekOrigin.CurrentForwards, 5000));
+
+            Tracks = library.Tracks;
+
+            PlayTrack = new Command<Track>(t =>
+            {
+                _playlist.MoveToEntry(t);
+                if (_player.Status == PlayerStatus.Stopped || _player.Status == PlayerStatus.Paused)
+                    _player.Play();
+            });
+            QueueTrack = new Command<Track>(t => _queue.Enqueue(t));
         }
     }
 }
