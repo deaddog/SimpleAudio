@@ -8,7 +8,6 @@ namespace SimpleAudio
     /// </summary>
     public partial class MainWindow : Window
     {
-        private bool exiting = false;
         private PopupWindow popup;
 
         public MainWindow()
@@ -16,8 +15,7 @@ namespace SimpleAudio
             InitializeComponent();
 
             var hotkeys = new Hotkeys.HotKeyManager(this);
-            hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => { this.Show(); searchControl.ResetSearch(); });
-            hotkeys.AddHotKey(Key.Q, ModifierKeys.Control | ModifierKeys.Alt, () => { exiting = true; this.Close(); });
+            hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => { Show(); searchControl.ResetSearch(); });
 
             popup = new PopupWindow();
             hotkeys.AddHotKey(Key.Space, ModifierKeys.Control | ModifierKeys.Alt, () => popup.ShowPopup());
@@ -27,22 +25,14 @@ namespace SimpleAudio
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            if (exiting)
-            {
-                popup.Close();
-                base.OnClosing(e);
-            }
-            else
-            {
-                e.Cancel = true;
-                base.OnClosing(e);
-                this.Hide();
-            }
+            e.Cancel = true;
+            base.OnClosing(e);
+            Hide();
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
             base.OnMouseLeftButtonDown(e);
         }
 
@@ -50,7 +40,7 @@ namespace SimpleAudio
         {
             if (e.Key == Key.Escape)
             {
-                this.Hide();
+                Hide();
                 e.Handled = true;
             }
             else

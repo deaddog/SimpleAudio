@@ -7,6 +7,7 @@ using SimpleAudio.ViewModels;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SimpleAudio
 {
@@ -81,6 +82,9 @@ namespace SimpleAudio
             {
                 DataContext = _appContainer.Resolve<StatusViewModel>()
             };
+
+            var hotkeys = new Hotkeys.HotKeyManager(main);
+            hotkeys.AddHotKey(Key.Q, ModifierKeys.Control | ModifierKeys.Alt, Shutdown);
 
             main.Show();
             main.Hide();
