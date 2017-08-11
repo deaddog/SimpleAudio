@@ -18,6 +18,8 @@ namespace SimpleAudio
         public static string ApplicationDataPath { get; }
         private static string SettingsPath => Path.Combine(ApplicationDataPath, "settings.json");
 
+        private IContainer _appContainer = null;
+
         static App()
         {
             var roamingPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
@@ -51,6 +53,8 @@ namespace SimpleAudio
         {
             var builder = new ContainerBuilder();
 
+            builder.Register(_ => File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0]));
+
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<StatusViewModel>().SingleInstance();
             builder.RegisterType<PlayerViewModel>().SingleInstance();
@@ -65,23 +69,15 @@ namespace SimpleAudio
             return builder.Build();
         }
 
-        public static App CurrentApp
-        {
-            get { return SimpleAudio.App.Current as App; }
-        }
-
-        public Settings Settings { get; private set; }
-
         protected override void OnStartup(StartupEventArgs e)
         {
-            Settings = File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0]);
+            _appContainer = CreateContainer();
 
             base.OnStartup(e);
         }
         protected override void OnExit(ExitEventArgs e)
         {
-            File.WriteAllText(SettingsPath, JsonConvert.SerializeObject(Settings));
-
+            File.WriteAllText(SettingsPath, JsonConvert.SerializeObject(_appContainer.Resolve<Settings>()));
             base.OnExit(e);
         }
     }
