@@ -16,19 +16,20 @@ namespace SimpleAudio
     /// </summary>
     public partial class App : Application
     {
-        public static string ApplicationDataPath { get; }
+        public static string ApplicationDataPath
+        {
+            get
+            {
+                var roamingPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
+
+                roamingPath = Path.Combine(roamingPath, "DeadDog", "SimpleAudio");
+                EnsurePath(roamingPath);
+
+                return roamingPath;
+            }
+        }
         private static string SettingsPath => Path.Combine(ApplicationDataPath, "settings.json");
 
-        private IContainer _appContainer = null;
-
-        static App()
-        {
-            var roamingPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
-
-            roamingPath = Path.Combine(roamingPath, "DeadDog", "SimpleAudio");
-            EnsurePath(roamingPath);
-            ApplicationDataPath = roamingPath;
-        }
         private static void EnsurePath(string path)
         {
             string[] levels = path.Split(Path.DirectorySeparatorChar);
@@ -49,6 +50,8 @@ namespace SimpleAudio
                     dir.Create();
             }
         }
+
+        private IContainer _appContainer = null;
 
         private IContainer CreateContainer()
         {
