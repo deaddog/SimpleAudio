@@ -100,6 +100,8 @@
     <Compile Include="TaskbarHider.cs" />
     <Compile Include="DesignViewModels.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MediaSourceCollection.cs" />
+    <Compile Include="ViewModels\MediaSourceViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
     <Page Include="Controls\AlbumCoverImage.xaml">

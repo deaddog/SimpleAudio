@@ -63,6 +63,9 @@ namespace SimpleAudio
             builder.RegisterType<StatusViewModel>().SingleInstance();
             builder.RegisterType<PlayerViewModel>().SingleInstance();
 
+            builder.RegisterType<MediaSourceViewModel>();
+            builder.RegisterType<MediaSourceCollection>().SingleInstance();
+
             builder.RegisterType<Library>().SingleInstance();
             builder.RegisterType<LibraryPlaylist>().Named<IPlaylist<Track>>("playlist").SingleInstance();
             builder.Register(_ => new QueuePlaylist<Track>(_.ResolveNamed<IPlaylist<Track>>("playlist"))).AsSelf().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
@@ -94,6 +97,8 @@ namespace SimpleAudio
 
             popup.Show();
             popup.Hide();
+
+            _appContainer.Resolve<MediaSourceCollection>().LoadCachedTracks();
 
             base.OnStartup(e);
         }
