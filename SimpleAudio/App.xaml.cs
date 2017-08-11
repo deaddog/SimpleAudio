@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Autofac;
+using DeadDog.Audio.Libraries;
+using DeadDog.Audio.Playback;
+using DeadDog.Audio.Playlist;
+using Newtonsoft.Json;
+using SimpleAudio.ViewModels;
 using System;
 using System.IO;
 using System.Windows;
@@ -40,6 +45,24 @@ namespace SimpleAudio
                 if (!dir.Exists)
                     dir.Create();
             }
+        }
+
+        private IContainer CreateContainer()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<MainViewModel>().SingleInstance();
+            builder.RegisterType<StatusViewModel>().SingleInstance();
+            builder.RegisterType<PlayerViewModel>().SingleInstance();
+
+            builder.RegisterType<Library>().SingleInstance();
+            builder.RegisterType<LibraryPlaylist>().Named<IPlaylist<Track>>("playlist").SingleInstance();
+            builder.Register(_ => new QueuePlaylist<Track>(_.ResolveNamed<IPlaylist<Track>>("playlist"))).AsSelf().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
+
+            builder.Register(_ => new FilePlayback<Track>(new AudioControl(), x => x.FilePath)).As<IPlayback<Track>>().SingleInstance();
+            builder.RegisterType<Player<Track>>().SingleInstance();
+
+            return builder.Build();
         }
 
         public static App CurrentApp
