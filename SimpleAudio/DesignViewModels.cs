@@ -1,73 +1,40 @@
-﻿using System;
-using Autofac;
-using DeadDog.Audio;
+﻿using DeadDog.Audio;
 using DeadDog.Audio.Libraries;
 using DeadDog.Audio.Playback;
-using SimpleAudio.ViewModels;
 using DeadDog.Audio.Playlist;
+using SimpleAudio.ViewModels;
+using System;
 
 namespace SimpleAudio
 {
     public class DesignViewModels
     {
-        #region IsDesignMode property hack
-
-        private System.Windows.DependencyObject dummy = new System.Windows.DependencyObject();
-        private bool IsDesignMode => System.ComponentModel.DesignerProperties.GetIsInDesignMode(dummy);
-
-        #endregion
-
-        private static IContainer _container;
-        private static IContainer Container => _container ?? (_container = CreateContainer());
-        private static IContainer CreateContainer()
+        private Library GetLibrary()
         {
-            var builder = new ContainerBuilder();
+            var library = new Library();
 
-            builder.RegisterType<MainViewModel>().SingleInstance();
-            builder.RegisterType<StatusViewModel>().SingleInstance();
-            builder.RegisterType<PlayerViewModel>().SingleInstance();
+            library.AddTrack(new RawTrack(@"C:\song.mp3", "Atlas, Rise!", "Hardwired... to Self-Destruct", 2, "Metallica", 2016));
 
-            builder.RegisterType<Library>().SingleInstance();
-            builder.RegisterType<LibraryPlaylist>().Named<IPlaylist<Track>>("playlist").SingleInstance();
-            builder.Register(_ => new QueuePlaylist<Track>(_.ResolveNamed<IPlaylist<Track>>("playlist"))).AsSelf().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
-
-            builder.Register(_ => new FilePlayback<Track>(new AudioControl(), x => x.FilePath)).As<IPlayback<Track>>().SingleInstance();
-            builder.RegisterType<Player<Track>>().SingleInstance();
-
-            return builder.Build();
+            return library;
         }
 
-        public MainViewModel MainViewModel
-        {
-            get { return IsDesignMode ? CreateDesignMainViewModel() : Container.Resolve<MainViewModel>(); }
-        }
+        public MainViewModel MainViewModel => new MainViewModel(StatusViewModel, GetLibrary(), null, null, null);
+
         public StatusViewModel StatusViewModel
         {
-            get { return IsDesignMode ? CreateDesignStatusViewModel() : Container.Resolve<StatusViewModel>(); }
-        }
+            get
+            {
+                var library = GetLibrary();
+                var playlist = new LibraryPlaylist(library);
 
-        private MainViewModel CreateDesignMainViewModel()
-        {
-            var library = new Library();
+                var player = new Player<Track>(playlist, new DesignPlayback());
+                var vm = new StatusViewModel(new PlayerViewModel(player));
 
-            var vm = new MainViewModel(CreateDesignStatusViewModel(), library, null, null, null);
+                playlist.MoveToEntry(library.Tracks[0]);
+                player.Play();
 
-            return vm;
-        }
-        private StatusViewModel CreateDesignStatusViewModel()
-        {
-            var library = new Library();
-            var playlist = new LibraryPlaylist(library);
-
-            var track = library.AddTrack(new RawTrack(@"C:\song.mp3", "Atlas, Rise!", "Hardwired... to Self-Destruct", 2, "Metallica", 2016));
-
-            var player = new Player<Track>(playlist, new DesignPlayback());
-            var vm = new StatusViewModel(new PlayerViewModel(player));
-
-            playlist.MoveToEntry(track);
-            player.Play();
-
-            return vm;
+                return vm;
+            }
         }
 
         #region Designer classes
