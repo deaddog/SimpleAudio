@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +18,7 @@ namespace SimpleAudio.Controls
     /// </summary>
     public partial class AlbumCoverImage : UserControl
     {
-        private static readonly MD5 hashing = MD5.Create();
+        private static readonly MD5 _md5 = MD5.Create();
         private readonly IAudioDbRepository _audioDb = new AudioDbRepository();
 
         public AlbumCoverImage()
@@ -27,19 +26,6 @@ namespace SimpleAudio.Controls
             InitializeComponent();
         }
 
-        private static string GetHashString(string input)
-        {
-            if (input == null || input.Length == 0)
-                return null;
-
-            StringBuilder sb = new StringBuilder();
-
-            byte[] hash = hashing.ComputeHash(Encoding.UTF8.GetBytes(input));
-            foreach (var b in hash)
-                sb.AppendFormat("{0:x2}", b);
-
-            return sb.ToString();
-        }
         private static string GetCoverFilepath(Album album)
         {
             var albumTitle = album?.Title.Trim();
@@ -49,8 +35,8 @@ namespace SimpleAudio.Controls
                 artistName = null;
 
             var filename = artistName == null ?
-                $"{GetHashString(albumTitle)}.jpg" :
-                $"{GetHashString(artistName)}_{GetHashString(albumTitle)}.jpg";
+                $"{_md5.GetHashString(albumTitle)}.jpg" :
+                $"{_md5.GetHashString(artistName)}_{_md5.GetHashString(albumTitle)}.jpg";
 
             string directory = Path.Combine(App.ApplicationDataPath, "covers");
             if (!Directory.Exists(directory))
