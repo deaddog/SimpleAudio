@@ -73,6 +73,21 @@ namespace SimpleAudio
         {
             _appContainer = CreateContainer();
 
+            var main = new MainWindow()
+            {
+                DataContext = _appContainer.Resolve<MainViewModel>()
+            };
+            var popup = new PopupWindow()
+            {
+                DataContext = _appContainer.Resolve<StatusViewModel>()
+            };
+
+            main.Show();
+            main.Hide();
+
+            popup.Show();
+            popup.Hide();
+
             base.OnStartup(e);
         }
         protected override void OnExit(ExitEventArgs e)

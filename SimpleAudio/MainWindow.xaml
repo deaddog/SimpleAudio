@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" ResizeMode="CanResizeWithGrip" 
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1" Topmost="True" ShowInTaskbar="False"
-        DataContext="{Binding Path=MainViewModel, Source={StaticResource DesignViewModels}}">
+        d:DataContext="{Binding Path=MainViewModel, Source={StaticResource DesignViewModels}}">
     <Grid>
         <notify:TaskbarIcon IconSource="{Binding Status.Player.Status, Converter={StaticResource StatusTaskbarIconConverter}, Mode=OneWay}"/>
         <ctrl:HotKeyControl PlayCommand="{Binding PlayCommand}" PauseCommand="{Binding PauseCommand}" PlayPauseCommand="{Binding PlayPauseCommand}" StopCommand="{Binding StopCommand}"

@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1"
         Topmost="True" ShowInTaskbar="False" ShowActivated="False"
         DragEnter="ImagePanel_DragEnter" DragLeave="ImagePanel_DragLeave"
-        DataContext="{Binding Path=StatusViewModel, Source={StaticResource DesignViewModels}}">
+        d:DataContext="{Binding Path=StatusViewModel, Source={StaticResource DesignViewModels}}">
     <Grid>
         <Rectangle Fill="#FF2E6292" Height="37" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
         <Grid Margin="-1,34,-1,0" Height="2" VerticalAlignment="Top">
