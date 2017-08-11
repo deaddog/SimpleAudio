@@ -8,19 +8,15 @@ namespace SimpleAudio
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PopupWindow popup;
-
         public MainWindow()
         {
             InitializeComponent();
 
             var hotkeys = new Hotkeys.HotKeyManager(this);
-            hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => { Show(); searchControl.ResetSearch(); });
-
-            popup = new PopupWindow();
-            hotkeys.AddHotKey(Key.Space, ModifierKeys.Control | ModifierKeys.Alt, () => popup.ShowPopup());
-
-            searchControl.ResetSearch();
+            hotkeys.AddHotKey(Key.J, ModifierKeys.Control | ModifierKeys.Alt, () => 
+            {
+                Show(); searchControl.ResetSearch();
+            });
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

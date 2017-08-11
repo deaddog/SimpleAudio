@@ -29,6 +29,9 @@ namespace SimpleAudio
 
             this.MouseMove += PopupWindow_MouseMove;
             this.MouseLeave += PopupWindow_MouseLeave;
+
+            var hotkeys = new Hotkeys.HotKeyManager(this);
+            hotkeys.AddHotKey(Key.Space, ModifierKeys.Control | ModifierKeys.Alt, () => ShowPopup());
         }
 
         void PopupWindow_MouseMove(object sender, MouseEventArgs e)
