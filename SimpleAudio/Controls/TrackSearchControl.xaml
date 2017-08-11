@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SimpleAudio.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600"
-             d:DataContext="{Binding Path=MainViewModel, Source={StaticResource ViewModelLocator}}">
+             d:DataContext="{Binding Path=MainViewModel, Source={StaticResource DesignViewModels}}">
     <Grid Background="White">
         <Rectangle Fill="#FF2E6292" Height="60" Stroke="#FF8C8C8C" VerticalAlignment="Top" Margin="-1,-1,-1,0"/>
         <ListBox x:Name="listbox" Margin="0,59,0,20" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding Tracks}" ItemTemplate="{DynamicResource TwoLineTracks}">

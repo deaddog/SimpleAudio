@@ -99,7 +99,7 @@
     <Compile Include="ScannerBackgroundWorker.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TaskbarHider.cs" />
-    <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="DesignViewModels.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />

@@ -8,7 +8,7 @@ using DeadDog.Audio.Playlist;
 
 namespace SimpleAudio
 {
-    public class ViewModelLocator
+    public class DesignViewModels
     {
         #region IsDesignMode property hack
 

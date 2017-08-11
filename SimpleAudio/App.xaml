@@ -6,7 +6,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <local:ViewModelLocator x:Key="ViewModelLocator" />
+            <local:DesignViewModels x:Key="DesignViewModels" />
             <convert:RelativeWidthConverter x:Key="RelativeWidthConverter" />
             <convert:StatusIconConverter x:Key="StatusIconConverter" />
             <convert:StatusTaskbarIconConverter x:Key="StatusTaskbarIconConverter" />
