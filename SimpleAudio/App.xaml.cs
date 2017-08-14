@@ -1,7 +1,13 @@
-﻿using System;
+﻿using Autofac;
+using DeadDog.Audio.Libraries;
+using DeadDog.Audio.Playback;
+using DeadDog.Audio.Playlist;
+using Newtonsoft.Json;
+using SimpleAudio.ViewModels;
+using System;
 using System.IO;
 using System.Windows;
-using System.Xml.Linq;
+using System.Windows.Input;
 
 namespace SimpleAudio
 {
@@ -10,22 +16,21 @@ namespace SimpleAudio
     /// </summary>
     public partial class App : Application
     {
-        private static readonly string applicationDataPath;
         public static string ApplicationDataPath
         {
-            get { return applicationDataPath; }
-        }
+            get
+            {
+                var roamingPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
 
-        static App()
-        {
-            var roamingPath = Environment.GetFolderPath(
-                Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create);
+                roamingPath = Path.Combine(roamingPath, "DeadDog", "SimpleAudio");
+                EnsurePath(roamingPath);
 
-            roamingPath = Path.Combine(roamingPath, "DeadDog", "SimpleAudio");
-            ensurePath(roamingPath);
-            applicationDataPath = roamingPath;
+                return roamingPath;
+            }
         }
-        private static void ensurePath(string path)
+        private static string SettingsPath => Path.Combine(ApplicationDataPath, "settings.json");
+
+        private static void EnsurePath(string path)
         {
             string[] levels = path.Split(Path.DirectorySeparatorChar);
             var drive = new DriveInfo(levels[0]);
@@ -46,35 +51,60 @@ namespace SimpleAudio
             }
         }
 
-        public static App CurrentApp
-        {
-            get { return SimpleAudio.App.Current as App; }
-        }
+        private IContainer _appContainer = null;
 
-        private string settingsPath;
-        private XDocument settingsDoc;
-        private Settings settings;
-        public Settings Settings
+        private IContainer CreateContainer()
         {
-            get { return settings; }
+            var builder = new ContainerBuilder();
+
+            builder.Register(_ => File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0]));
+
+            builder.RegisterType<MainViewModel>().SingleInstance();
+            builder.RegisterType<StatusViewModel>().SingleInstance();
+            builder.RegisterType<PlayerViewModel>().SingleInstance();
+
+            builder.RegisterType<MediaSourceViewModel>();
+            builder.RegisterType<MediaSourceCollection>().SingleInstance();
+
+            builder.RegisterType<Library>().SingleInstance();
+            builder.RegisterType<LibraryPlaylist>().Named<IPlaylist<Track>>("playlist").SingleInstance();
+            builder.Register(_ => new QueuePlaylist<Track>(_.ResolveNamed<IPlaylist<Track>>("playlist"))).AsSelf().As<IPlaylist<Track>>().As<IPlayable<Track>>().SingleInstance();
+
+            builder.Register(_ => new FilePlayback<Track>(new AudioControl(), x => x.FilePath)).As<IPlayback<Track>>().SingleInstance();
+            builder.RegisterType<Player<Track>>().SingleInstance();
+
+            return builder.Build();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            this.settingsPath = Path.Combine(applicationDataPath, "settings.xml");
-            this.settingsDoc = File.Exists(settingsPath) ? XDocument.Load(settingsPath) : new XDocument();
+            _appContainer = CreateContainer();
 
-            XElement settingsElement = settingsDoc.Element("settings");
-            if (settingsElement == null)
-                settingsDoc.Add(settingsElement = new XElement("settings"));
+            var main = new MainWindow()
+            {
+                DataContext = _appContainer.Resolve<MainViewModel>()
+            };
+            var popup = new PopupWindow()
+            {
+                DataContext = _appContainer.Resolve<StatusViewModel>()
+            };
 
-            this.settings = new Settings(settingsElement);
+            var hotkeys = new Hotkeys.HotKeyManager(main);
+            hotkeys.AddHotKey(Key.Q, ModifierKeys.Control | ModifierKeys.Alt, Shutdown);
+
+            main.Show();
+            main.Hide();
+
+            popup.Show();
+            popup.Hide();
+
+            _appContainer.Resolve<MediaSourceCollection>().LoadCachedTracks();
 
             base.OnStartup(e);
         }
         protected override void OnExit(ExitEventArgs e)
         {
-            this.settingsDoc.Save(settingsPath);
+            File.WriteAllText(SettingsPath, JsonConvert.SerializeObject(_appContainer.Resolve<Settings>()));
             base.OnExit(e);
         }
     }

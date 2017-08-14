@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,10 +39,26 @@
     <ApplicationIcon>Resources\audio.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Autofac, Version=4.6.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Flurl, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Flurl.2.4.0\lib\net40\Flurl.dll</HintPath>
+    </Reference>
+    <Reference Include="Flurl.Http, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Flurl.Http.1.2.0\lib\net45\Flurl.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=2.1.2.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.2.1.2\lib\netstandard1.0\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,16 +76,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command.cs" />
+    <Compile Include="Controls\AlbumCoverImage.xaml.cs">
+      <DependentUpon>AlbumCoverImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HotKeyControl.cs" />
+    <Compile Include="Controls\TrackSearchControl.xaml.cs">
+      <DependentUpon>TrackSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\RelativeWidthConverter.cs" />
+    <Compile Include="Converters\StatusIconConverter.cs" />
+    <Compile Include="Converters\StatusTaskbarIconConverter.cs" />
     <Compile Include="CoverLoader.cs" />
+    <Compile Include="HashExtension.cs" />
+    <Compile Include="HotKeyExtension.cs" />
     <Compile Include="Hotkeys\HotKey.cs" />
     <Compile Include="Hotkeys\HotKeyAlreadyRegisteredException.cs" />
     <Compile Include="Hotkeys\HotKeyManager.cs" />
     <Compile Include="PopupWindow.xaml.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ScannerBackgroundWorker.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TaskbarHider.cs" />
+    <Compile Include="DesignViewModels.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MediaSourceCollection.cs" />
+    <Compile Include="ViewModels\MediaSourceViewModel.cs" />
+    <Compile Include="ViewModels\PlayerViewModel.cs" />
+    <Compile Include="ViewModels\StatusViewModel.cs" />
+    <Page Include="Controls\AlbumCoverImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TrackSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +147,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,7 +158,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DeadDog.Audio\Source\DeadDog.Audio.csproj">
+    <ProjectReference Include="..\DeadDog.Audio\DeadDog.Audio.AudioDB\DeadDog.Audio.AudioDB.csproj">
+      <Project>{f57a9126-c03a-499c-b1fb-5336fbce4415}</Project>
+      <Name>DeadDog.Audio.AudioDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeadDog.Audio\DeadDog.Audio\DeadDog.Audio.csproj">
       <Project>{a393fd81-a89c-4761-af87-2e5de2b95b61}</Project>
       <Name>DeadDog.Audio</Name>
     </ProjectReference>
@@ -123,16 +172,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset.ico" />
+    <Resource Include="Resources\headset.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset_pause.ico" />
+    <Resource Include="Resources\headset_pause.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset_play.ico" />
+    <Resource Include="Resources\headset_play.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\headset_stop.ico" />
+    <Resource Include="Resources\headset_stop.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\audio.ico" />
@@ -152,7 +209,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.2.0.0\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.2.0.0\build\dotnet\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.2.0.0\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.0.0\build\dotnet\Fody.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
