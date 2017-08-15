@@ -57,7 +57,7 @@ namespace SimpleAudio
         {
             var builder = new ContainerBuilder();
 
-            builder.Register(_ => File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0]));
+            builder.Register(_ => File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0])).SingleInstance();
 
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<StatusViewModel>().SingleInstance();
