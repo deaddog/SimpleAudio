@@ -103,6 +103,7 @@
     <Compile Include="ViewModels\MediaSourceCollection.cs" />
     <Compile Include="ViewModels\MediaSourceViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
+    <Compile Include="ViewModels\QueueViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
     <Page Include="Controls\AlbumCoverImage.xaml">
       <SubType>Designer</SubType>

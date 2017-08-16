@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctrl="clr-namespace:SimpleAudio.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="148" Width="420" ResizeMode="NoResize"
+        Title="MainWindow" SizeToContent="Height" Width="420" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" BorderBrush="#FF8C8C8C" BorderThickness="1"
         Topmost="True" ShowInTaskbar="False" ShowActivated="False"
         DragEnter="ImagePanel_DragEnter" DragLeave="ImagePanel_DragLeave"
@@ -29,15 +29,34 @@
             <TextBlock Text="/" Foreground="White" Margin="0 1 2 0" FontSize="20"/>
             <TextBlock Text="{Binding Player.Length, StringFormat=%m\\:ss, Mode=OneWay}" Foreground="#FFA8CDF0" Margin="0,8,5,0" FontSize="13"/>
         </StackPanel>
-        <StackPanel Height="100" Orientation="Horizontal" Margin="5,41,5,5">
-            <ctrl:AlbumCoverImage HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Album="{Binding Player.CurrentTrack.Album, Mode=OneWay}"/>
-            <StackPanel Height="100">
-                <TextBlock Text="{Binding Player.CurrentTrack.Title, Mode=OneWay}" HorizontalAlignment="Left" Margin="5,21,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
-                <TextBlock Text="{Binding Player.CurrentTrack.Artist.Name, Mode=OneWay}" HorizontalAlignment="Left" Margin="9,-1,0,0" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="9,-2,0,0" VerticalAlignment="Top">
-                    <Run Text="{Binding Player.CurrentTrack.Album.Title, Mode=OneWay}"/>
-                    <Run Text="{Binding Player.CurrentTrack.Tracknumber, Mode=OneWay, StringFormat=#{0:0}}"/>
-                </TextBlock>
+        <StackPanel Margin="5,41,5,5">
+            <StackPanel Height="100" Orientation="Horizontal">
+                <ctrl:AlbumCoverImage HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Album="{Binding Player.CurrentTrack.Album, Mode=OneWay}"/>
+                <StackPanel Height="100">
+                    <TextBlock Text="{Binding Player.CurrentTrack.Title, Mode=OneWay}" HorizontalAlignment="Left" Margin="5,21,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+                    <TextBlock Text="{Binding Player.CurrentTrack.Artist.Name, Mode=OneWay}" HorizontalAlignment="Left" Margin="9,-1,0,0" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="9,-2,0,0" VerticalAlignment="Top">
+                        <Run Text="{Binding Player.CurrentTrack.Album.Title, Mode=OneWay}"/>
+                        <Run Text="{Binding Player.CurrentTrack.Tracknumber, Mode=OneWay, StringFormat=#{0:0}}"/>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Visibility="Visible" x:Name="QField" Height="40" Orientation="Horizontal" Margin="5,5,5,5">
+                <Border BorderThickness="1" BorderBrush="Black">
+                    <Image HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="40" Stretch="Fill"/>
+                </Border>
+                <Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0">
+                        <Label Content="track title" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+                        <Label Content="by" VerticalAlignment="Top" Margin="-5,2,0,0" Foreground="Gray"/>
+                        <Label Content="artist name" VerticalAlignment="Top" Margin="-5,2,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top">
+                        <Label Content="track number" Padding="0"/>
+                        <Label Content=" from " Padding="0" Foreground="Gray"/>
+                        <Label Content="album title" Padding="0"/>
+                    </StackPanel>
+                </Grid>
             </StackPanel>
         </StackPanel>
     </Grid>
