@@ -13,7 +13,7 @@ namespace SimpleAudio
         {
             var library = new Library();
 
-            library.AddTrack(new RawTrack(@"C:\song.mp3", "Atlas, Rise!", "Hardwired... to Self-Destruct", 2, "Metallica", 2016));
+            library.Add(new RawTrack(@"C:\song.mp3", "Atlas, Rise!", "Hardwired... to Self-Destruct", 2, "Metallica", 2016));
 
             return library;
         }

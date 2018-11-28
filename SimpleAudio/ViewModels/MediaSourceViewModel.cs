@@ -54,7 +54,7 @@ namespace SimpleAudio.ViewModels
             var res = AudioScanner.ScanDirectory(scanSettings).Result;
 
             foreach (var file in res.Where(x => x.Action == FileActions.Skipped))
-                _library.AddTrack(file.MediaInfo);
+                _library.Add(file.MediaInfo);
         }
         public async Task ReloadTracks()
         {
