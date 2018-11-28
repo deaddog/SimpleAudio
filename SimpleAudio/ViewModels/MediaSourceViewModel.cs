@@ -45,6 +45,7 @@ namespace SimpleAudio.ViewModels
         {
             var scanSettings = new ScannerSettings(_mediaSource.Path, SearchOption.AllDirectories, SourceCacheFilepath)
             {
+                Parser = DeadDog.Audio.Parsing.MediaParser.GetDefault(false),
                 IncludeFileUpdates = false,
                 IncludeNewFiles = false,
                 RemoveMissingFiles = false
@@ -59,6 +60,7 @@ namespace SimpleAudio.ViewModels
         {
             var scanSettings = new ScannerSettings(_mediaSource.Path, SearchOption.AllDirectories, SourceCacheFilepath)
             {
+                Parser = DeadDog.Audio.Parsing.MediaParser.GetDefault(false),
                 IncludeFileUpdates = true,
                 IncludeNewFiles = true,
                 RemoveMissingFiles = true
