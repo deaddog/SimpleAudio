@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadDog.Audio", "DeadDog.Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadDog.Audio.AudioDB", "DeadDog.Audio\DeadDog.Audio.AudioDB\DeadDog.Audio.AudioDB.csproj", "{F57A9126-C03A-499C-B1FB-5336FBCE4415}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{BE664513-9C0D-4960-B302-D08C65D436BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A393FD81-A89C-4761-AF87-2E5DE2B95B61} = {BE664513-9C0D-4960-B302-D08C65D436BB}
+		{F57A9126-C03A-499C-B1FB-5336FBCE4415} = {BE664513-9C0D-4960-B302-D08C65D436BB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B21EFAD8-24F4-4D34-9BDD-9BAF8AB2B71F}
 	EndGlobalSection
 EndGlobal
