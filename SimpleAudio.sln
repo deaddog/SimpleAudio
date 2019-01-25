@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadDog.Audio.AudioDB", "De
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{BE664513-9C0D-4960-B302-D08C65D436BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvvm", "Mvvm\Mvvm.csproj", "{49CD8D53-88A5-4014-B0AE-DFDEFC64D7BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{F57A9126-C03A-499C-B1FB-5336FBCE4415}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F57A9126-C03A-499C-B1FB-5336FBCE4415}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F57A9126-C03A-499C-B1FB-5336FBCE4415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49CD8D53-88A5-4014-B0AE-DFDEFC64D7BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49CD8D53-88A5-4014-B0AE-DFDEFC64D7BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49CD8D53-88A5-4014-B0AE-DFDEFC64D7BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49CD8D53-88A5-4014-B0AE-DFDEFC64D7BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
