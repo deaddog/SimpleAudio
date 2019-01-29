@@ -5,7 +5,6 @@
              xmlns:convert="clr-namespace:SimpleAudio.Converters">
     <Application.Resources>
         <ResourceDictionary>
-            <local:DesignViewModels x:Key="DesignViewModels" />
             <convert:RelativeWidthConverter x:Key="RelativeWidthConverter" />
             <convert:StatusIconConverter x:Key="StatusIconConverter" />
             <convert:StatusTaskbarIconConverter x:Key="StatusTaskbarIconConverter" />
