@@ -15,18 +15,18 @@ namespace SimpleAudio.ViewModels
             _player = player;
 
             _player.StatusChanged += (s, e) => Status = _player.Status;
-            _player.PositionChanged += (s, e) => Position = TimeSpan.FromMilliseconds(_player.Position);
+            _player.PositionChanged += (s, e) => Position = _player.Position;
 
             _player.TrackChanged += (s, e) =>
             {
                 CurrentTrack = _player.Track;
-                Length = TimeSpan.FromMilliseconds(_player.Length);
+                Length = _player.Length;
             };
 
             Status = _player.Status;
-            Position = TimeSpan.FromMilliseconds(_player.Position);
+            Position = _player.Position;
             CurrentTrack = _player.Track;
-            Length = TimeSpan.FromMilliseconds(_player.Length);
+            Length = _player.Length;
         }
 
         public PlayerStatus Status { get; private set; }

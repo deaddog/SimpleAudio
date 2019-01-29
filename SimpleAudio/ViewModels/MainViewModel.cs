@@ -3,6 +3,7 @@ using DeadDog.Audio.Libraries;
 using DeadDog.Audio.Playback;
 using DeadDog.Audio.Playlist;
 using PropertyChanged;
+using System;
 using System.Windows.Input;
 
 namespace SimpleAudio.ViewModels
@@ -50,8 +51,8 @@ namespace SimpleAudio.ViewModels
             PreviousCommand = new Command(() => _playlist.MovePrevious());
             NextCommand = new Command(() => _playlist.MoveNext());
 
-            SeekBackwardsCommand = new Command(() => player.Seek(PlayerSeekOrigin.CurrentBackwards, 5000));
-            SeekForwardsCommand = new Command(() => player.Seek(PlayerSeekOrigin.CurrentForwards, 5000));
+            SeekBackwardsCommand = new Command(() => player.Seek(TimeSpan.FromSeconds(-5)));
+            SeekForwardsCommand = new Command(() => player.Seek(TimeSpan.FromSeconds(5)));
 
             Tracks = library.Tracks;
 
