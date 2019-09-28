@@ -59,12 +59,14 @@ namespace SimpleAudio
 
             builder.Register(_ => File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0]));
 
-            builder.RegisterType<MainViewModel>().SingleInstance();
-            builder.RegisterType<StatusViewModel>().SingleInstance();
-            builder.RegisterType<PlayerViewModel>().SingleInstance();
+            //builder.RegisterType<>
 
-            builder.RegisterType<MediaSourceViewModel>();
-            builder.RegisterType<MediaSourceCollection>().SingleInstance();
+            builder.RegisterType<OldMainViewModel>().SingleInstance();
+            builder.RegisterType<OldStatusViewModel>().SingleInstance();
+            builder.RegisterType<OldPlayerViewModel>().SingleInstance();
+
+            builder.RegisterType<OldMediaSourceViewModel>();
+            builder.RegisterType<OldMediaSourceCollection>().SingleInstance();
 
             builder.RegisterType<Library>().SingleInstance();
             builder.RegisterType<LibraryPlaylist>().Named<IPlaylist<Track>>("playlist").SingleInstance();
@@ -82,11 +84,11 @@ namespace SimpleAudio
 
             var main = new MainWindow()
             {
-                DataContext = _appContainer.Resolve<MainViewModel>()
+                DataContext = _appContainer.Resolve<OldMainViewModel>()
             };
             var popup = new PopupWindow()
             {
-                DataContext = _appContainer.Resolve<StatusViewModel>()
+                DataContext = _appContainer.Resolve<OldStatusViewModel>()
             };
 
             var hotkeys = new Hotkeys.HotKeyManager(main);
@@ -98,7 +100,7 @@ namespace SimpleAudio
             popup.Show();
             popup.Hide();
 
-            _appContainer.Resolve<MediaSourceCollection>().LoadCachedTracks();
+            _appContainer.Resolve<OldMediaSourceCollection>().LoadCachedTracks();
 
             base.OnStartup(e);
         }

@@ -8,14 +8,14 @@ using System.Windows.Input;
 namespace SimpleAudio.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
-    public class MainViewModel
+    public class OldMainViewModel
     {
         private readonly Library _library;
         private readonly Player<Track> _player;
         private readonly IPlaylist<Track> _playlist;
         private readonly QueuePlaylist<Track> _queue;
 
-        public StatusViewModel Status { get; }
+        public OldStatusViewModel Status { get; }
 
         public ICommand PlayCommand { get; set; }
         public ICommand PauseCommand { get; set; }
@@ -33,7 +33,7 @@ namespace SimpleAudio.ViewModels
         public ICommand PlayTrack { get; }
         public ICommand QueueTrack { get; }
 
-        public MainViewModel(StatusViewModel status, Library library, Player<Track> player, IPlaylist<Track> playlist, QueuePlaylist<Track> queue)
+        public OldMainViewModel(OldStatusViewModel status, Library library, Player<Track> player, IPlaylist<Track> playlist, QueuePlaylist<Track> queue)
         {
             _library = library;
             _player = player;

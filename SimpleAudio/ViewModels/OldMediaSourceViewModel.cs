@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SimpleAudio.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
-    public class MediaSourceViewModel
+    public class OldMediaSourceViewModel
     {
         private readonly Library _library;
         private readonly MediaSource _mediaSource;
@@ -31,9 +31,9 @@ namespace SimpleAudio.ViewModels
             }
         }
 
-        public delegate MediaSourceViewModel Factory(MediaSource mediaSource);
+        public delegate OldMediaSourceViewModel Factory(MediaSource mediaSource);
 
-        public MediaSourceViewModel(Library library, MediaSource mediaSource)
+        public OldMediaSourceViewModel(Library library, MediaSource mediaSource)
         {
             _library = library;
             _mediaSource = mediaSource;

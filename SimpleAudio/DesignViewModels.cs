@@ -18,9 +18,9 @@ namespace SimpleAudio
             return library;
         }
 
-        public MainViewModel MainViewModel => new MainViewModel(StatusViewModel, GetLibrary(), null, null, null);
+        public OldMainViewModel MainViewModel => new OldMainViewModel(StatusViewModel, GetLibrary(), null, null, null);
 
-        public StatusViewModel StatusViewModel
+        public OldStatusViewModel StatusViewModel
         {
             get
             {
@@ -28,7 +28,7 @@ namespace SimpleAudio
                 var playlist = new LibraryPlaylist(library);
 
                 var player = new Player<Track>(playlist, new DesignPlayback());
-                var vm = new StatusViewModel(new PlayerViewModel(player));
+                var vm = new OldStatusViewModel(new OldPlayerViewModel(player));
 
                 playlist.MoveToEntry(library.Tracks[0]);
                 player.Play();

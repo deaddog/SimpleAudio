@@ -6,11 +6,11 @@ using System;
 namespace SimpleAudio.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
-    public class PlayerViewModel
+    public class OldPlayerViewModel
     {
         private readonly Player<Track> _player;
 
-        public PlayerViewModel(Player<Track> player)
+        public OldPlayerViewModel(Player<Track> player)
         {
             _player = player;
 

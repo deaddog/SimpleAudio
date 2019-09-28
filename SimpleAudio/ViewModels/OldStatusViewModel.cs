@@ -3,11 +3,11 @@ using PropertyChanged;
 namespace SimpleAudio.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
-    public class StatusViewModel
+    public class OldStatusViewModel
     {
-        public PlayerViewModel Player { get; }
+        public OldPlayerViewModel Player { get; }
 
-        public StatusViewModel(PlayerViewModel player)
+        public OldStatusViewModel(OldPlayerViewModel player)
         {
             Player = player;
         }
