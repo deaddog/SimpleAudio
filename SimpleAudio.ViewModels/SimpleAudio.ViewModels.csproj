@@ -42,7 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlViewModel.cs" />
+    <Compile Include="PlayerViewModel.cs" />
+    <Compile Include="MediaSearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueViewModel.cs" />
+    <Compile Include="StatusViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeadDog.Audio\DeadDog.Audio\DeadDog.Audio.csproj">
+      <Project>{A393FD81-A89C-4761-AF87-2E5DE2B95B61}</Project>
+      <Name>DeadDog.Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mvvm\Mvvm.csproj">
+      <Project>{49CD8D53-88A5-4014-B0AE-DFDEFC64D7BD}</Project>
+      <Name>Mvvm</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable">
