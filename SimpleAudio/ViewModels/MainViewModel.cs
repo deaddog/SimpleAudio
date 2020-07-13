@@ -1,14 +1,11 @@
-﻿using DeadDog.Audio;
-using DeadDog.Audio.Libraries;
+﻿using DeadDog.Audio.Libraries;
 using DeadDog.Audio.Playback;
 using DeadDog.Audio.Playlist;
-using PropertyChanged;
 using System;
 using System.Windows.Input;
 
 namespace SimpleAudio.ViewModels
 {
-    [AddINotifyPropertyChangedInterface]
     public class MainViewModel
     {
         private readonly Library _library;

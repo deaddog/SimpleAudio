@@ -1,6 +1,5 @@
 ﻿using DeadDog.Audio.Libraries;
 using DeadDog.Audio.Scan;
-using PropertyChanged;
 using System;
 using System.IO;
 using System.Linq;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace SimpleAudio.ViewModels
 {
-    [AddINotifyPropertyChangedInterface]
     public class MediaSourceViewModel
     {
         private readonly Library _library;

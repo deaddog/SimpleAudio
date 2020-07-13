@@ -1,11 +1,10 @@
 ﻿using DeadDog.Audio.Libraries;
 using DeadDog.Audio.Playback;
-using PropertyChanged;
+using Mvvm;
 using System;
 
 namespace SimpleAudio.ViewModels
 {
-    [AddINotifyPropertyChangedInterface]
     public class PlayerViewModel
     {
         private readonly Player<Track> _player;

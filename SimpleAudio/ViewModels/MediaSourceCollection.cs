@@ -1,12 +1,10 @@
-﻿using PropertyChanged;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SimpleAudio.ViewModels
 {
-    [AddINotifyPropertyChangedInterface]
     public class MediaSourceCollection
     {
         private readonly MediaSourceViewModel[] _sources;
