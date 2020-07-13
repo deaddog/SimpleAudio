@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudio.ViewModels", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudio.Views", "SimpleAudio.Views\SimpleAudio.Views.csproj", "{7F77632D-6D18-44CA-998C-214913369BAE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test Projects Ui", "Test Projects Ui", "{F6C3701F-31A6-4F58-87FC-A763EFDA0C72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudio.Test.Status", "SimpleAudio.Test.Status\SimpleAudio.Test.Status.csproj", "{E18F88E0-D658-4F78-B429-CD745B0D4372}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,10 @@ Global
 		{7F77632D-6D18-44CA-998C-214913369BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F77632D-6D18-44CA-998C-214913369BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F77632D-6D18-44CA-998C-214913369BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E18F88E0-D658-4F78-B429-CD745B0D4372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18F88E0-D658-4F78-B429-CD745B0D4372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18F88E0-D658-4F78-B429-CD745B0D4372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18F88E0-D658-4F78-B429-CD745B0D4372}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +68,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A393FD81-A89C-4761-AF87-2E5DE2B95B61} = {BE664513-9C0D-4960-B302-D08C65D436BB}
 		{F57A9126-C03A-499C-B1FB-5336FBCE4415} = {BE664513-9C0D-4960-B302-D08C65D436BB}
+		{E18F88E0-D658-4F78-B429-CD745B0D4372} = {F6C3701F-31A6-4F58-87FC-A763EFDA0C72}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B21EFAD8-24F4-4D34-9BDD-9BAF8AB2B71F}
