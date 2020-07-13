@@ -15,16 +15,16 @@ namespace SimpleAudio.ViewModels
 
         public StatusViewModel Status { get; }
 
-        public ICommand PlayCommand { get; set; }
-        public ICommand PauseCommand { get; set; }
-        public ICommand PlayPauseCommand { get; set; }
+        public ICommand PlayCommand { get; }
+        public ICommand PauseCommand { get; }
+        public ICommand PlayPauseCommand { get; }
         public ICommand StopCommand { get; set; }
 
-        public ICommand PreviousCommand { get; set; }
+        public ICommand PreviousCommand { get; }
         public ICommand NextCommand { get; set; }
 
-        public ICommand SeekBackwardsCommand { get; set; }
-        public ICommand SeekForwardsCommand { get; set; }
+        public ICommand SeekBackwardsCommand { get; }
+        public ICommand SeekForwardsCommand { get; }
 
         public LibraryCollection<Track> Tracks { get; }
 

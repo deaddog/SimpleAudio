@@ -162,6 +162,10 @@
       <Project>{a393fd81-a89c-4761-af87-2e5de2b95b61}</Project>
       <Name>DeadDog.Audio</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mvvm\Mvvm.csproj">
+      <Project>{49CD8D53-88A5-4014-B0AE-DFDEFC64D7BD}</Project>
+      <Name>Mvvm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFNotifyIcon\NotifyIconWpf.csproj">
       <Project>{7ac63864-7638-41c4-969c-d3197ef2bed9}</Project>
       <Name>NotifyIconWpf</Name>

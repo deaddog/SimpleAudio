@@ -5,7 +5,7 @@ using System;
 
 namespace SimpleAudio.ViewModels
 {
-    public class PlayerViewModel
+    public class PlayerViewModel : ObservableObject
     {
         private readonly Player<Track> _player;
 
@@ -20,6 +20,7 @@ namespace SimpleAudio.ViewModels
             {
                 CurrentTrack = _player.Track;
                 Length = _player.Length;
+                Position = TimeSpan.Zero;
             };
 
             Status = _player.Status;
@@ -28,12 +29,40 @@ namespace SimpleAudio.ViewModels
             Length = _player.Length;
         }
 
-        public PlayerStatus Status { get; private set; }
+        private PlayerStatus _status;
+        public PlayerStatus Status
+        {
+            get => _status;
+            set => Set(ref _status, value);
+        }
 
-        public TimeSpan Position { get; private set; }
-        public TimeSpan Length { get; private set; }
+        private TimeSpan _position;
+        private TimeSpan _length;
+        public TimeSpan Position
+        {
+            get => _position;
+            set
+            {
+                if (Set(ref _position, value))
+                    RaisePropertyChanged(nameof(Progress));
+            }
+        }
+        public TimeSpan Length
+        {
+            get => _length;
+            set
+            {
+                if (Set(ref _length, value))
+                    RaisePropertyChanged(nameof(Progress));
+            }
+        }
         public double Progress => Position.TotalSeconds / Length.TotalSeconds;
 
-        public Track CurrentTrack { get; private set; }
+        private Track _currentTrack;
+        public Track CurrentTrack
+        {
+            get => _currentTrack;
+            set => Set(ref _currentTrack, value);
+        }
     }
 }
