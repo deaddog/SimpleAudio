@@ -1,0 +1,6 @@
+﻿<Application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VisualElements
+      BackgroundColor="#2d2d30"
+      ShowNameOnSquare150x150Logo="off"
+      ForegroundText="light"/>
+</Application>
