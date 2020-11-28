@@ -4,6 +4,7 @@ using DeadDog.Audio.Playback;
 using DeadDog.Audio.Playlist;
 using Newtonsoft.Json;
 using SimpleAudio.ViewModels;
+using SimpleAudio.Views;
 using System;
 using System.IO;
 using System.Windows;
@@ -59,7 +60,11 @@ namespace SimpleAudio
 
             builder.Register(_ => File.Exists(SettingsPath) ? JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsPath)) : new Settings(new MediaSource[0]));
 
-            //builder.RegisterType<>
+            builder.RegisterType<ControlViewModel>().SingleInstance();
+            builder.RegisterType<StatusViewModel>().SingleInstance();
+            builder.RegisterType<QueueViewModel>().SingleInstance();
+            builder.RegisterType<PlayerViewModel>().SingleInstance();
+            builder.RegisterType<MediaSearchViewModel>().SingleInstance();
 
             builder.RegisterType<OldMainViewModel>().SingleInstance();
             builder.RegisterType<OldStatusViewModel>().SingleInstance();
@@ -81,6 +86,32 @@ namespace SimpleAudio
         protected override void OnStartup(StartupEventArgs e)
         {
             _appContainer = CreateContainer();
+            DeadDog.Audio.Parsing.MediaParser.GetDefault(false).TryParseTrack(@"C:\Users\Mikkel\Music\Alien Weaponry\Alien Weaponry - Tū\Alien Weaponry - Tū - 02 Rū Ana Te Whenua.flac", out var rt);
+            var t =_appContainer.Resolve<Library>().Add(rt);
+            _appContainer.Resolve<ControlViewModel>().PlayCommand.Execute(null);
+
+            var q = _appContainer.Resolve<QueuePlaylist<Track>>();
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+            q.Enqueue(t);
+
+            //var playerView = new SimpleAudio.Views.PopupWindow()
+            //{
+            //    DataContext = _appContainer.Resolve<PlayerViewModel>()
+            //};
+
+            //playerView.Show();
+
+            base.OnStartup(e);
+            return;
+
 
             var main = new MainWindow()
             {

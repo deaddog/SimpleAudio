@@ -167,6 +167,14 @@
       <Project>{a393fd81-a89c-4761-af87-2e5de2b95b61}</Project>
       <Name>DeadDog.Audio</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleAudio.ViewModels\SimpleAudio.ViewModels.csproj">
+      <Project>{0fa91641-8eb9-4307-9587-05c18b967913}</Project>
+      <Name>SimpleAudio.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleAudio.Views\SimpleAudio.Views.csproj">
+      <Project>{7f77632d-6d18-44ca-998c-214913369bae}</Project>
+      <Name>SimpleAudio.Views</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFNotifyIcon\NotifyIconWpf.csproj">
       <Project>{7ac63864-7638-41c4-969c-d3197ef2bed9}</Project>
       <Name>NotifyIconWpf</Name>

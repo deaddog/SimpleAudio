@@ -1,0 +1,8 @@
+﻿<Application x:Class="SimpleAudio.Tests.Ui.PlayerUi.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SimpleAudio.Tests.Ui.PlayerUi">
+    <Application.Resources>
+        <ResourceDictionary Source="pack://application:,,,/SimpleAudio.Views;component/Converters.xaml"/>
+    </Application.Resources>
+</Application>

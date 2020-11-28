@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudio", "SimpleAudio\SimpleAudio.csproj", "{A8BF1C4E-272A-4955-BF39-29D4FF13EDC2}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudio.ViewModels", "SimpleAudio.ViewModels\SimpleAudio.ViewModels.csproj", "{0FA91641-8EB9-4307-9587-05C18B967913}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudio.Views", "SimpleAudio.Views\SimpleAudio.Views.csproj", "{7F77632D-6D18-44CA-998C-214913369BAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudio.Tests.Ui.PlayerUi", "SimpleAudio.Tests.Ui.PlayerUi\SimpleAudio.Tests.Ui.PlayerUi.csproj", "{8F4EE7DD-3790-43A8-BB4D-CF6E37EC36F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{7F77632D-6D18-44CA-998C-214913369BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F77632D-6D18-44CA-998C-214913369BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F77632D-6D18-44CA-998C-214913369BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F4EE7DD-3790-43A8-BB4D-CF6E37EC36F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F4EE7DD-3790-43A8-BB4D-CF6E37EC36F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F4EE7DD-3790-43A8-BB4D-CF6E37EC36F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F4EE7DD-3790-43A8-BB4D-CF6E37EC36F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
